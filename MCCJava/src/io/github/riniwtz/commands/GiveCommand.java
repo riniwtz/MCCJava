@@ -4,17 +4,14 @@ import io.github.riniwtz.mcc.Items;
 import io.github.riniwtz.mcc.Player;
 
 
-public class GiveCommand {
+public class GiveCommand implements Executable {
 	Player player = new Player();
 	Blocks block = new Blocks();
 	Items item = new Items();
 	String playerName;
 	String itemName;
-	String[] itemNameSplit;
 	long amount = 1;
 	int amountLimit = 6400;
-	int minGiveCommandArguments = 3;
-	int maxGiveCommandArguments = 4;
 	
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
@@ -58,6 +55,7 @@ public class GiveCommand {
 		return newString;
 	}
 	
+	@Override
 	public void execute(String[] cmd) {
 		if ((cmd.length == 3) || (cmd.length == 4)) {
 			if ((cmd[2].length() > 10) && (cmd[2].substring(0, 10).equals("minecraft:"))) 

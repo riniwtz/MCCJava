@@ -4,7 +4,6 @@ public class BaseCommand {
 	String[] cmd;
 	String cmdInput;
 	String playerName;
-	int range = 0;
 
 	public void setCommand(String text) {
 		cmd = text.split(" ");
@@ -27,11 +26,13 @@ public class BaseCommand {
 		switch(getCommand(0)) {
 			case "/give":
 				new GiveCommand().execute(getCommand());
+				checkCommandLengthError(3, 4);
+				break;
+			case "/time":
+				new TimeCommand().execute(getCommand());
 				break;
 		}
-			
-		
-		checkCommandLengthError();
+
 //		
 //		 // Time cmd
 //		if ((getCommand(0).equals("/time")) && (cmd.length == 2) || (cmd.length == 3)) {
@@ -90,9 +91,9 @@ public class BaseCommand {
 //		}
 	}
 	
-	public void checkCommandLengthError() {
+	public void checkCommandLengthError(int min, int max) {
 		if (cmdInput.length() > 0) {
-			if ((cmdInput.substring(0,1).equals("/")) && (cmd.length < 3)) {
+			if ((cmdInput.substring(0,1).equals("/")) && (cmd.length < min) && (cmd.length > max)) {
 				CommandOutputMessage.printUnknownCommandOutput();
 				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 			}
