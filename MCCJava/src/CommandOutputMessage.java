@@ -54,6 +54,11 @@ public class CommandOutputMessage {
 		System.out.print(out.substring(0, out.length() - 1) + ("<--[HERE]\n"));
 	}
 	
+	// WORK IN PROGRESS
+	public static final String convertItemIDToItemName(String itemID) {
+		return itemID;
+	}
+	
 	public static final String getUpperCaseFirstChar(String text) {
 		return (text.substring(0, 1).toUpperCase()) + (text.substring(1, text.length()));
 	}

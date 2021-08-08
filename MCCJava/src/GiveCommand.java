@@ -4,7 +4,8 @@ public class GiveCommand {
 	Blocks block = new Blocks();
 	Items item = new Items();
 	String playerName;
-	String itemName = null;
+	String itemName;
+	String[] itemNameSplit;
 	long amount = 1;
 	int amountLimit = 6400;
 	int minGiveCommandArguments = 3;
@@ -46,11 +47,20 @@ public class GiveCommand {
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 		}
 	}
-
+	
+	public String splitString(String text, String letter) {
+		String newString = text.substring(text.indexOf(letter) + 1, text.length());
+		return newString;
+	}
+	
 	public void execute(String[] cmd) {
 		if ((cmd.length == 3) || (cmd.length == 4)) {
+			if ((cmd[2].length() > 10) && (cmd[2].substring(0, 10).equals("minecraft:"))) 
+				cmd[2] = splitString(cmd[2], ":");	
+			
 			playerName = cmd[1];
 			itemName = cmd[2];
+
 			if (playerName.equals(player.getName())) {
 				if (block.verifyBlockCommand(cmd, itemName) || item.verifyItemCommand(cmd, itemName)) {
 					if (cmd.length == 4) amount = convertAmountToLong(cmd, cmd[3]);
@@ -61,7 +71,6 @@ public class GiveCommand {
 						player.addItemInventory(cmd[2], (int)amount);
 						CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
 					}
-					
 				} else {
 					CommandOutputMessage.printUnknownItemOutput(itemName);
 					CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);

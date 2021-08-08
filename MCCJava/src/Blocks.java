@@ -3,10 +3,9 @@ import java.util.ArrayList;
 public class Blocks {
 	ArrayList<String> block = new ArrayList<>();
 	Blocks() {
+		block.add("acacia_door");
+		block.add("acacia_leaves");
 		block.add("dirt");
-		block.add("cobblestone");
-		block.add("stone");
-		block.add("");
 	}
 	
 	public ArrayList<String> getBlocks() {
@@ -22,5 +21,4 @@ public class Blocks {
 		}
 		return false;
 	}
-	
 }
