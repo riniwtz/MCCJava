@@ -1,9 +1,8 @@
 package io.github.riniwtz.mcc;
 import java.util.ArrayList;
 
-import io.github.riniwtz.commands.GiveCommand;
-
 public class Items {
+	// FIXME - block and item initialization especially the exceptions
 	ArrayList<String> item = new ArrayList<>();
 	public Items() {
 		item.add("stick");
@@ -14,10 +13,9 @@ public class Items {
 		return item;
 	}
 	
-	public boolean exists(String[] cmd, String itemName) {
+	public boolean exists(String[] cmd) {
 		for (String i : getItems()) {
 			if (cmd[2].equals(i)) {
-				new GiveCommand().setItemName(cmd[2]);
 				return true;
 			}
 		}
