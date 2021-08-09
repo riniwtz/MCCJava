@@ -15,7 +15,7 @@ public class Blocks {
 		return block;
 	}
 	
-	public boolean verifyBlockCommand(String[] cmd, String itemName) {
+	public boolean exists(String[] cmd, String itemName) {
 		for (String b : getBlocks()) {
 			if (cmd[2].equals(b)) {
 				new GiveCommand().setItemName(cmd[2]);

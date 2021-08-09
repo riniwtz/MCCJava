@@ -14,7 +14,7 @@ public class Items {
 		return item;
 	}
 	
-	public boolean verifyItemCommand(String[] cmd, String itemName) {
+	public boolean exists(String[] cmd, String itemName) {
 		for (String i : getItems()) {
 			if (cmd[2].equals(i)) {
 				new GiveCommand().setItemName(cmd[2]);
