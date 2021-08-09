@@ -48,6 +48,25 @@ public class GiveCommand extends BaseCommand implements Executable {
 		return newString;
 	}
 	
+	/*
+	 * Checks if command length is less than or greater than arguments needed
+	 * Checks if command length is equal to 3 or equal to 4
+	 * Checks if itemName length is greater than 10 and is equals to "minecraft:"
+	 * "minecraft:" is removed from itemName and prints out the itemName
+	 * 
+	 * name is assigned to playerName
+	 * commandArray(2) is assigned to itemName
+	 * 
+	 * Checks if playerName is equal to player.getName() else prints an Error Message
+	 * Checks if block or item exist else prints an Error message
+	 * Checks if command length is 4 to convert amount to long
+	 * Checks if it has command errors
+	 * 
+	 * Checks if amount is greater than 0 and amount is less than the amount limit
+	 * player.addItemInventory(cmd[2], (int)amount);
+	 * CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
+	 */
+	
 	@Override
 	public void execute(String[] cmd) {
 		checkCommandLengthError(cmd, 3, 4);
@@ -60,12 +79,11 @@ public class GiveCommand extends BaseCommand implements Executable {
 			
 			
 			if (playerName.equals(player.getName())) {
-				if (block.verifyBlockCommand(cmd, itemName) || item.verifyItemCommand(cmd, itemName)) {
+				if (block.exists(cmd, itemName) || item.exists(cmd, itemName)) {
 					if (cmd.length == 4) amount = convertAmountToLong(cmd, cmd[3]);
 					checkHasCommandErrors(cmd, amount);
 					
 					if ((amount > 0) && (amount <= amountLimit)) {
-						itemName = cmd[2];
 						player.addItemInventory(cmd[2], (int)amount);
 						CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
 					}
