@@ -1,9 +1,6 @@
 package io.github.riniwtz.commands;
-import io.github.riniwtz.mcc.Player;
 
-public class KillCommand implements Executable {
-	Player player = new Player();
-	
+public class KillCommand extends BaseCommand implements Executable {
 	@Override
 	public void execute(String[] cmd) {
 		if (cmd.length == 1) {
@@ -20,5 +17,4 @@ public class KillCommand implements Executable {
 			}
 		}
 	}
-
 }

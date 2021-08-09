@@ -1,13 +1,6 @@
 package io.github.riniwtz.commands;
-import io.github.riniwtz.mcc.Blocks;
-import io.github.riniwtz.mcc.Items;
-import io.github.riniwtz.mcc.Player;
 
-
-public class GiveCommand implements Executable {
-	Player player = new Player();
-	Blocks block = new Blocks();
-	Items item = new Items();
+public class GiveCommand extends BaseCommand implements Executable {
 	String playerName;
 	String itemName;
 	long amount = 1;
@@ -57,6 +50,7 @@ public class GiveCommand implements Executable {
 	
 	@Override
 	public void execute(String[] cmd) {
+		checkCommandLengthError(cmd, 3, 4);
 		if ((cmd.length == 3) || (cmd.length == 4)) {
 			if ((cmd[2].length() > 10) && (cmd[2].substring(0, 10).equals("minecraft:"))) 
 				cmd[2] = splitString(cmd[2], ":");	

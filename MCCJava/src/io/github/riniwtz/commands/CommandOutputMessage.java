@@ -29,6 +29,10 @@ public class CommandOutputMessage {
 		System.out.println(("Killed ") + (name));
 	}
 	
+	public static final void printExpectedFloatOutput() {
+		System.out.println("Expected float");
+	}
+	
 	public static final void printInvalidIntegerOutput(long amount) {
 		System.out.println(("Invalid integer '") + (amount) + ("'"));
 	}

@@ -1,48 +1,71 @@
 package io.github.riniwtz.commands;
 
+import io.github.riniwtz.mcc.Blocks;
+import io.github.riniwtz.mcc.Items;
+import io.github.riniwtz.mcc.Player;
+import io.github.riniwtz.mcc.World;
+
 public class BaseCommand {
-	String[] cmd;
-	String cmdInput;
-	String playerName;
+	protected World world = new World();
+	protected Player player = new Player();
+	protected Blocks block = new Blocks();
+	protected Items item = new Items();
+	
+	private String[] cmd;
+	private String cmdInput;
 
 	public void setCommand(String text) {
 		cmd = text.split(" ");
 		cmdInput = getCommand(0);
 	}
 	
-	public String[] getCommand() {
+	protected String[] getCommand() {
 		return cmd;
 	}
 	
-	public String getCommand(int index) {
+	protected String getCommand(int index) {
 		return cmd[index];
 	}
 	
-	public String getCommandInput() {
+	protected String getCommandInput() {
 		return cmdInput;
 	}
 	
 	public void executeCommand() {
 		switch(getCommand(0)) {
-			case "/give":
+			case "/give": {
 				new GiveCommand().execute(getCommand());
-				checkCommandLengthError(3, 4);
 				break;
-			case "/time":
+			}
+			
+			case "/time": {
 				new TimeCommand().execute(getCommand());
 				break;
-			case "/kill":
+			}
+			
+			case "/kill": {
 				new KillCommand().execute(getCommand());
 				break;
+			}
+			
+			default: {
+				CommandOutputMessage.printUnknownCommandOutput();
+				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			}	
 		}
 	}
 	
-	public void checkCommandLengthError(int min, int max) {
-		if (cmdInput.length() > 0) {
-			if ((cmdInput.substring(0,1).equals("/")) && (cmd.length < min) && (cmd.length > max)) {
-				CommandOutputMessage.printUnknownCommandOutput();
-				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-			}
+	protected void checkCommandLengthError(String[] cmd, int range) {
+		if ((cmd.length < range) || (cmd.length > range)) {
+			CommandOutputMessage.printUnknownCommandOutput();
+			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+		}
+	}
+	
+	protected void checkCommandLengthError(String[] cmd, int min, int max) {
+		if ((cmd.length < 3) || (cmd.length > 4)) {
+			CommandOutputMessage.printUnknownCommandOutput();
+			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 		}
 	}
 }
