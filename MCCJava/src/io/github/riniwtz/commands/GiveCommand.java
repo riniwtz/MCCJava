@@ -1,10 +1,10 @@
 package io.github.riniwtz.commands;
 
 public class GiveCommand extends BaseCommand implements Executable {
-	String playerName;
-	String itemName;
-	long amount = 1;
-	int amountLimit = 6400;
+	private String playerName;
+	private String itemName;
+	private long amount = 1;
+	private int amountLimit = 6400;
 	
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
@@ -24,19 +24,19 @@ public class GiveCommand extends BaseCommand implements Executable {
 		} catch (NumberFormatException e) {
 			CommandOutputMessage.printExpectedIntegerOutput();
 			CommandOutputMessage.printUnknownCommandDefaultOutput(commandArray);
+			System.exit(0);
 		}
 		return amount;
 	}
 	
-	public void checkGiveCommandErrors(String[] cmd, long amount) {
+	public void checkHasCommandErrors(String[] cmd, long amount) {
 		if (amount > Integer.MAX_VALUE) {
 			CommandOutputMessage.printInvalidIntegerOutput(amount);
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-		}
-						
-		if ((amount > amountLimit) && (amount < Integer.MAX_VALUE))
+		}			
+		if ((amount > amountLimit) && (amount < Integer.MAX_VALUE)) 
 			CommandOutputMessage.printGivePlayerAmountLimitOutput(itemName);
-			
+
 		if (amount == 0) {
 			CommandOutputMessage.printIntegerIsZeroOutput();
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
@@ -57,12 +57,13 @@ public class GiveCommand extends BaseCommand implements Executable {
 			
 			playerName = cmd[1];
 			itemName = cmd[2];
-
+			
+			
 			if (playerName.equals(player.getName())) {
 				if (block.verifyBlockCommand(cmd, itemName) || item.verifyItemCommand(cmd, itemName)) {
 					if (cmd.length == 4) amount = convertAmountToLong(cmd, cmd[3]);
+					checkHasCommandErrors(cmd, amount);
 					
-					checkGiveCommandErrors(cmd, amount);
 					if ((amount > 0) && (amount <= amountLimit)) {
 						itemName = cmd[2];
 						player.addItemInventory(cmd[2], (int)amount);
