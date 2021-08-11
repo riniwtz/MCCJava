@@ -1,5 +1,9 @@
 package io.github.riniwtz.mcc;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Items {
 	// FIXME - block and item initialization especially the exceptions
