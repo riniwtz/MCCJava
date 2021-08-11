@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Items {
-	// FIXME - block and item initialization especially the exceptions
 	ArrayList<String> item = new ArrayList<>();
 
 	public Items() {

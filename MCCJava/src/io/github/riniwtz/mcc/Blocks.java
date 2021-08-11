@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Blocks {
-	// FIXME - block and item initialization especially the exceptions
 	// TODO - Add all block and item names in blocks_list and items_list files
 	ArrayList<String> block = new ArrayList<>();
 
