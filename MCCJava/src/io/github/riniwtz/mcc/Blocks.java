@@ -11,7 +11,7 @@ public class Blocks {
 	ArrayList<String> block = new ArrayList<>();
 	
 	public void initializeBlock() throws FileNotFoundException, IOException {
-		// FIXME - Path should be relative
+		
 		File file = new File("src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
 		
 		Scanner scan = new Scanner(file);
