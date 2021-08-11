@@ -1,8 +1,4 @@
 package io.github.riniwtz.commands;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import io.github.riniwtz.mcc.Blocks;
 import io.github.riniwtz.mcc.Items;
 import io.github.riniwtz.mcc.Player;
