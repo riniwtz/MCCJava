@@ -12,7 +12,8 @@ public class Blocks {
 	
 	public void initializeBlock() throws FileNotFoundException, IOException {
 		// FIXME - Path should be relative
-		File file = new File("D:\\Documents\\Coding\\GitHub\\MCCJava\\MCCJava\\src\\io\\github\\riniwtz\\resources\\blocks_list");
+		File file = new File("src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
+		
 		Scanner scan = new Scanner(file);
 		
 		String fileContent = "";
