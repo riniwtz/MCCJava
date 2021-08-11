@@ -32,7 +32,7 @@ public class GiveCommand extends BaseCommand {
 	
 	@Override
 	public void execute(String[] cmd) throws FileNotFoundException, IOException {
-		checkCommandLengthError(cmd, 3, 4);
+		CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 3, 4);
 		if ((cmd.length == 3) || (cmd.length == 4)) {
 			if ((cmd[2].length() > 10) && (cmd[2].substring(0, 10).equals("minecraft:"))) 
 				cmd[2] = splitString(cmd[2], ":");	
@@ -61,22 +61,6 @@ public class GiveCommand extends BaseCommand {
 				CommandOutputMessage.printUnknownCommandOutput();
 				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 			}
-		}
-	}
-	
-	@Override
-	protected void checkCommandLengthError(String[] cmd, int range) {
-		if ((cmd.length < range) || (cmd.length > range)) {
-			CommandOutputMessage.printUnknownCommandOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-		}
-	}
-	
-	@Override
-	protected void checkCommandLengthError(String[] cmd, int min, int max) {
-		if ((cmd.length < 3) || (cmd.length > 4)) {
-			CommandOutputMessage.printUnknownCommandOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 		}
 	}
 	

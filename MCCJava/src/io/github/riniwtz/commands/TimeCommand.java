@@ -5,7 +5,7 @@ public class TimeCommand extends BaseCommand {
 	@Override
 	public void execute(String[] cmd) {
 		if ((cmd.length == 2) || (cmd.length == 3)) {
-			checkCommandLengthError(cmd, 2, 3);
+			CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 2, 3);
 			try {
 				switch (cmd[1]){
 					case "add": {
@@ -41,22 +41,6 @@ public class TimeCommand extends BaseCommand {
 				CommandOutputMessage.printExpectedFloatOutput();
 				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 			}
-		}
-	}
-	
-	@Override
-	protected void checkCommandLengthError(String[] cmd, int range) {
-		if ((cmd.length < range) || (cmd.length > range)) {
-			CommandOutputMessage.printUnknownCommandOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-		}
-	}
-	
-	@Override
-	protected void checkCommandLengthError(String[] cmd, int min, int max) {
-		if ((cmd.length < 3) || (cmd.length > 4)) {
-			CommandOutputMessage.printUnknownCommandOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 		}
 	}
 }

@@ -14,7 +14,4 @@ public abstract class BaseCommand {
 	protected Player player = new Player();
 	protected Items item = new Items();
 	public abstract void execute(String[] cmd) throws FileNotFoundException, IOException;
-	protected abstract void checkCommandLengthError(String[] cmd, int range);
-	protected abstract void checkCommandLengthError(String[] cmd, int min, int max);
-	
 }

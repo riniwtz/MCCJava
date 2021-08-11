@@ -69,4 +69,18 @@ public class CommandOutputMessage {
 	public static final String getUpperCaseFirstChar(String text) {
 		return (text.substring(0, 1).toUpperCase()) + (text.substring(1, text.length()));
 	}
+	
+	protected static void printCheckCommandLengthErrorOutput(String[] cmd, int range) {
+		if ((cmd.length < range) || (cmd.length > range)) {
+			CommandOutputMessage.printUnknownCommandOutput();
+			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+		}
+	}
+	
+	protected static void printCheckCommandLengthErrorOutput(String[] cmd, int min, int max) {
+		if ((cmd.length < min) || (cmd.length > max)) {
+			CommandOutputMessage.printUnknownCommandOutput();
+			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+		}
+	}
 }

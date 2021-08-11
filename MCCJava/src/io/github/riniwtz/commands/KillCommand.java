@@ -18,20 +18,4 @@ public class KillCommand extends BaseCommand {
 			}
 		}
 	}
-	
-	@Override
-	protected void checkCommandLengthError(String[] cmd, int range) {
-		if ((cmd.length < range) || (cmd.length > range)) {
-			CommandOutputMessage.printUnknownCommandOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-		}
-	}
-	
-	@Override
-	protected void checkCommandLengthError(String[] cmd, int min, int max) {
-		if ((cmd.length < 3) || (cmd.length > 4)) {
-			CommandOutputMessage.printUnknownCommandOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-		}
-	}
 }
