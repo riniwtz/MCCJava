@@ -24,18 +24,6 @@ public class Blocks {
 		}
 	}
 
-//	public void initializeBlock() throws FileNotFoundException, IOException {
-//		File file = new File("MCCJava\\src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
-//		Scanner scan = new Scanner(file);
-//
-//		String blockName;
-//		while (scan.hasNextLine()) {
-//			blockName = scan.nextLine();
-//			block.add(blockName);
-//		}
-//		scan.close();
-//	}
-
 	public ArrayList<String> getBlocks() {
 		return block;
 	}
