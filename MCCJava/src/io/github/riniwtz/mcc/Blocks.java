@@ -1,7 +1,6 @@
 package io.github.riniwtz.mcc;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,12 +20,9 @@ public class Blocks {
 				block.add(blockName);
 			}
 			scan.close();
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
+		} catch (NumberFormatException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 //	public void initializeBlock() throws FileNotFoundException, IOException {

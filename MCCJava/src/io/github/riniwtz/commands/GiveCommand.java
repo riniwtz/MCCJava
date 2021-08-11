@@ -39,7 +39,6 @@ public class GiveCommand extends BaseCommand {
 			
 			//TODO - Add an error output for not matching playerName in /give command
 			if (playerName.equals(player.getName())) {
-				//block.initializeBlock();
 				if (block.exists(cmd) || item.exists(cmd)) {
 					if (cmd.length == 4) amount = convertAmountToLong(cmd, cmd[3]);
 					checkHasCommandErrors(cmd, amount);
