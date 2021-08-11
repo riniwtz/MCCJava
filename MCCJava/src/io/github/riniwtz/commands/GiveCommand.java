@@ -28,7 +28,7 @@ public class GiveCommand extends BaseCommand {
 	private long amount = 1;
 	private final int AMOUNT_LIMIT = 6400;
 
-	public void execute(String[] cmd) throws IOException {
+	public void execute(String[] cmd) {
 		CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 3, 4);
 		if ((cmd.length == 3) || (cmd.length == 4)) {
 			if ((cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:")))
@@ -39,7 +39,7 @@ public class GiveCommand extends BaseCommand {
 			
 			//TODO - Add an error output for not matching playerName in /give command
 			if (playerName.equals(player.getName())) {
-				block.initializeBlock();
+				//block.initializeBlock();
 				if (block.exists(cmd) || item.exists(cmd)) {
 					if (cmd.length == 4) amount = convertAmountToLong(cmd, cmd[3]);
 					checkHasCommandErrors(cmd, amount);

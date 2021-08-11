@@ -9,18 +9,37 @@ public class Blocks {
 	// FIXME - block and item initialization especially the exceptions
 	// TODO - Add all block and item names in blocks_list and items_list files
 	ArrayList<String> block = new ArrayList<>();
- 
-	public void initializeBlock() throws FileNotFoundException, IOException {
-		File file = new File("MCCJava\\src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
-		Scanner scan = new Scanner(file);
 
-		String blockName;
-		while (scan.hasNextLine()) {
-			blockName = scan.nextLine();
-			block.add(blockName);
+	public Blocks() {
+		try {
+			File file = new File("MCCJava\\src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
+			Scanner scan = new Scanner(file);
+
+			String blockName;
+			while (scan.hasNextLine()) {
+				blockName = scan.nextLine();
+				block.add(blockName);
+			}
+			scan.close();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
-		scan.close();
+
 	}
+
+//	public void initializeBlock() throws FileNotFoundException, IOException {
+//		File file = new File("MCCJava\\src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
+//		Scanner scan = new Scanner(file);
+//
+//		String blockName;
+//		while (scan.hasNextLine()) {
+//			blockName = scan.nextLine();
+//			block.add(blockName);
+//		}
+//		scan.close();
+//	}
 
 	public ArrayList<String> getBlocks() {
 		return block;
