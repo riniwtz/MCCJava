@@ -11,10 +11,10 @@ public class Blocks {
 	ArrayList<String> block = new ArrayList<>();
  
 	public void initializeBlock() throws FileNotFoundException, IOException {
-		File file = new File("src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
+		File file = new File("MCCJava\\src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
 		Scanner scan = new Scanner(file);
 
-		String blockName = "";
+		String blockName;
 		while (scan.hasNextLine()) {
 			blockName = scan.nextLine();
 			block.add(blockName);

@@ -8,11 +8,11 @@ import java.util.Scanner;
 public class Items {
 	// FIXME - block and item initialization especially the exceptions
 	ArrayList<String> item = new ArrayList<>();
-	public void initializeItem() throws FileNotFoundException, IOException {
+	public void initializeItem() throws IOException {
 		File file = new File("src\\io\\github\\riniwtz\\resources\\items_list").getAbsoluteFile();
 		Scanner scan = new Scanner(file);
 
-		String itemName = "";
+		String itemName;
 		while (scan.hasNextLine()) {
 			itemName = scan.nextLine();
 			item.add(itemName);

@@ -5,16 +5,16 @@ public class Player extends Inventory {
 	private String name;
 	private int health = 20;
 	private ArrayList<String> player = new ArrayList<>();
-	
+
 	public Player() {
 		setName("riniwtz");
 		player.add(getName());
 	}
-	
+
 	Player(String name) {
 		setName(name);
 	}
-	
+
 	public ArrayList<String> getPlayers() {
 		return player;
 	}

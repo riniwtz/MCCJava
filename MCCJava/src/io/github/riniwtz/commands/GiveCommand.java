@@ -1,6 +1,5 @@
 package io.github.riniwtz.commands;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /*
@@ -25,19 +24,17 @@ import java.io.IOException;
 
 public class GiveCommand extends BaseCommand {
 
-	private String playerName;
 	private String itemName;
 	private long amount = 1;
-	private int amountLimit = 6400;
-	
-	@Override
-	public void execute(String[] cmd) throws FileNotFoundException, IOException {
+	private final int AMOUNT_LIMIT = 6400;
+
+	public void execute(String[] cmd) throws IOException {
 		CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 3, 4);
 		if ((cmd.length == 3) || (cmd.length == 4)) {
-			if ((cmd[2].length() > 10) && (cmd[2].substring(0, 10).equals("minecraft:"))) 
-				cmd[2] = splitString(cmd[2], ":");	
-			
-			playerName = cmd[1];
+			if ((cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:")))
+				cmd[2] = splitString(cmd[2], ":");
+
+			String playerName = cmd[1];
 			itemName = cmd[2];
 			
 			//TODO - Add an error output for not matching playerName in /give command
@@ -46,8 +43,8 @@ public class GiveCommand extends BaseCommand {
 				if (block.exists(cmd) || item.exists(cmd)) {
 					if (cmd.length == 4) amount = convertAmountToLong(cmd, cmd[3]);
 					checkHasCommandErrors(cmd, amount);
-					
-					if ((amount > 0) && (amount <= amountLimit)) {
+
+					if ((amount > 0) && (amount <= AMOUNT_LIMIT)) {
 						player.addItemInventory(cmd[2], (int)amount);
 						// FIXME - GiveItemCommandOutput itemName ex: oak_planks = Oak Planks || red_stained_glass = Red Stained Glass
 						CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
@@ -56,17 +53,12 @@ public class GiveCommand extends BaseCommand {
 					CommandOutputMessage.printUnknownItemOutput(itemName);
 					CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 				}
-				
 			} else {
 				CommandOutputMessage.printUnknownCommandOutput();
 				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 			}
 		}
 	}
-	
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	} 
 	
 	public long convertAmountToLong(String[] cmd, String commandInput) {
 		try {
@@ -84,7 +76,7 @@ public class GiveCommand extends BaseCommand {
 			CommandOutputMessage.printInvalidIntegerOutput(amount);
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 		}			
-		if ((amount > amountLimit) && (amount < Integer.MAX_VALUE)) 
+		if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE))
 			CommandOutputMessage.printGivePlayerAmountLimitOutput(itemName);
 
 		if (amount == 0) {
@@ -94,7 +86,6 @@ public class GiveCommand extends BaseCommand {
 	}
 	
 	public String splitString(String text, String letter) {
-		String newString = text.substring(text.indexOf(letter) + 1, text.length());
-		return newString;
+		return text.substring(text.indexOf(letter) + 1);
 	}
 }

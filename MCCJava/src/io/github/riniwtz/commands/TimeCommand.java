@@ -7,34 +7,26 @@ public class TimeCommand extends BaseCommand {
 		if ((cmd.length == 2) || (cmd.length == 3)) {
 			CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 2, 3);
 			try {
-				switch (cmd[1]){
-					case "add": {
+				switch (cmd[1]) {
+					case "add" -> {
 						if (cmd.length == 3) {
 							world.addTime(Float.parseFloat(cmd[2]));
 							CommandOutputMessage.printTimeOutput(cmd[1], world);
 						}
-						break;
 					}
-	
-					case "query": {
-						break;
+					case "query" -> {
 					}
-						
-					case "set": {
+					case "set" -> {
 						if (cmd.length == 3) {
 							world.setTime(Float.parseFloat(cmd[2]));
 							CommandOutputMessage.printTimeOutput(cmd[1], world);
 						}
-						break;
 					}
-						
 					//Not really part of Minecraft cmd. (Only used for fixing bugs)
-					case "get": {
+					case "get" -> {
 						if (cmd.length == 2) {
-							System.out.println((int)world.getTime());
+							System.out.println((int) world.getTime());
 						}
-							
-						break;
 					}
 				}
 			} catch (NumberFormatException e) {

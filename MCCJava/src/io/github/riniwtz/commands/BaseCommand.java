@@ -1,6 +1,5 @@
 package io.github.riniwtz.commands;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import io.github.riniwtz.mcc.Blocks;
@@ -13,5 +12,5 @@ public abstract class BaseCommand {
 	protected World world = new World();
 	protected Player player = new Player();
 	protected Items item = new Items();
-	public abstract void execute(String[] cmd) throws FileNotFoundException, IOException;
+	public abstract void execute(String[] cmd) throws IOException;
 }
