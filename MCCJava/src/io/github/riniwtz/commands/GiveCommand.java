@@ -68,12 +68,12 @@ public class GiveCommand extends BaseCommand {
 		this.itemName = itemName;
 	} 
 	
-	public long convertAmountToLong(String[] commandArray, String commandInput) {
+	public long convertAmountToLong(String[] cmd, String commandInput) {
 		try {
 			amount = Long.parseLong(commandInput);
 		} catch (NumberFormatException e) {
 			CommandOutputMessage.printExpectedIntegerOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(commandArray);
+			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 			System.exit(0);
 		}
 		return amount;
