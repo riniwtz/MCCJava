@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a5b9b8-f6b2-4b0c-8f6c-dad762de534b" name="Changes" comment="Updated Code">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MCCJava/MCCJava.iml" afterDir="false" />
+    <list default="true" id="87a5b9b8-f6b2-4b0c-8f6c-dad762de534b" name="Changes" comment="Fixed if-else statements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/BaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/BaseCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/mcc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/mcc/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/CommandOutputMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/CommandOutputMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/GiveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/GiveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/TimeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/TimeCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +29,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
@@ -88,7 +86,35 @@
       <option name="project" value="LOCAL" />
       <updated>1628691423628</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Updated Code">
+      <created>1628691942506</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1628691942506</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Updated Metadata">
+      <created>1628691972492</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1628691972492</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Updated Code">
+      <created>1628692402778</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1628692402778</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fixed getConvertItemIDToItemName() method">
+      <created>1628750778378</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1628750778378</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -107,7 +133,21 @@
     <MESSAGE value="IntelliJ" />
     <MESSAGE value="Refactored Code" />
     <MESSAGE value="Fixed Exceptions and Updated GiveCommand.java" />
+    <MESSAGE value="Updated Metadata" />
     <MESSAGE value="Updated Code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Code" />
+    <MESSAGE value="Fixed getConvertItemIDToItemName() method" />
+    <MESSAGE value="Fixed if-else statements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed if-else statements" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/GiveCommand.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
