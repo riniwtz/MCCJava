@@ -5,7 +5,7 @@ public class TimeCommand extends BaseCommand {
 	@Override
 	public void execute(String[] cmd) {
 		if ((cmd.length == 2) || (cmd.length == 3)) {
-			CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 2, 3);
+			//CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 2, 3);
 			try {
 				switch (cmd[1]) {
 					case "add" -> {

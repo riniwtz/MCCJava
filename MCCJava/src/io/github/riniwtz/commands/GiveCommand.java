@@ -23,69 +23,87 @@ public class GiveCommand extends BaseCommand {
 
 	private String itemName;
 	private long amount = 1;
-	private final int AMOUNT_LIMIT = 6400;
+	private boolean isAmountCharacter = false;
+	private final int MINIMUM_ARGUMENT = 3;
+	private final int MAXIMUM_ARGUMENT = 4;
 
+	@Override
 	public void execute(String[] cmd) {
-		CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 3, 4);
+		CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, MINIMUM_ARGUMENT, MAXIMUM_ARGUMENT);
 		if ((cmd.length == 3) || (cmd.length == 4)) {
 			if ((cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:")))
-				cmd[2] = splitString(cmd[2], ":");
+				cmd[2] = getSplitString(cmd[2], ":");
 
 			String playerName = cmd[1];
 			itemName = cmd[2];
 			
 			//TODO - Add an error output for not matching playerName in /give command
-			if (playerName.equals(player.getName())) {
-				if (block.exists(cmd) || item.exists(cmd)) {
-					if (cmd.length == 4) amount = convertAmountToLong(cmd, cmd[3]);
-					checkHasCommandErrors(cmd, amount);
-
-					if ((amount > 0) && (amount <= AMOUNT_LIMIT)) {
-						player.addItemInventory(cmd[2], (int)amount);
-						// FIXME - GiveItemCommandOutput itemName ex: oak_planks = Oak Planks || red_stained_glass = Red Stained Glass
-						CommandOutputMessage.printGivePlayerItemOutput(CommandOutputMessage.getConvertItemIDToItemName(itemName), (int)amount, player);
-					}
-				} else {
-					CommandOutputMessage.printUnknownItemOutput(itemName);
-					CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			if (block.exists(cmd) || item.exists(cmd)) {
+				if (cmd.length == 4) amount = convertAmountToLong(cmd[3]);
+				if (!(checkHasCommandHandlerErrors(cmd, playerName, amount))) {
+					player.addItemInventory(cmd[2], (int)amount);
+					CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
 				}
-			} else if (!(playerName.equals(player.getName()))) {
-				if (block.exists(cmd) || item.exists(cmd))
-					CommandOutputMessage.printNoPlayerFoundOutput();
-				else {
-					CommandOutputMessage.printUnknownItemOutput(itemName);
-					CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-				}
+				this.amount = 1;
+			} else {
+				CommandOutputMessage.printUnknownItemOutput(itemName);
+				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 			}
 		}
 	}
 	
-	public long convertAmountToLong(String[] cmd, String commandInput) {
+	public long convertAmountToLong(String amount) {
 		try {
-			amount = Long.parseLong(commandInput);
+			this.amount = Long.parseLong(amount);
 		} catch (NumberFormatException e) {
-			CommandOutputMessage.printExpectedIntegerOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-			System.exit(0);
+			this.isAmountCharacter = true;
 		}
-		return amount;
+		return this.amount;
 	}
-	
-	public void checkHasCommandErrors(String[] cmd, long amount) {
+
+	public boolean checkHasCommandHandlerErrors(String[] cmd, String playerName, long amount) {
 		if (amount > Integer.MAX_VALUE) {
 			CommandOutputMessage.printInvalidIntegerOutput(amount);
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-		}			
-		if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE))
+			return true;
+		}
+
+		int AMOUNT_LIMIT = 6400;
+		if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE)) {
 			CommandOutputMessage.printGivePlayerAmountLimitOutput(itemName);
+			return true;
+		}
 
 		if (amount == 0) {
 			CommandOutputMessage.printIntegerIsZeroOutput();
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			return true;
 		}
+
+		if (!(playerName.equals(player.getName()))) {
+			if (block.exists(cmd) || item.exists(cmd)) {
+				if (cmd.length > MAXIMUM_ARGUMENT) {
+					System.out.println("WORKING WORKING");
+					CommandOutputMessage.printIncorrectArgumentCommandOutput();
+					CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+				} else {
+					System.out.println(cmd.length);
+					CommandOutputMessage.printNoPlayerFoundOutput();
+				}
+			}
+			return true;
+		}
+
+		if (isAmountCharacter) {
+			CommandOutputMessage.printExpectedIntegerOutput();
+			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			return true;
+		}
+
+		return false;
 	}
 	
-	public String splitString(String text, String letter) {
+	public String getSplitString(String text, String letter) {
 		return text.substring(text.indexOf(letter) + 1);
 	}
 }
