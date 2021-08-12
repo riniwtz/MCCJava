@@ -1,7 +1,5 @@
 package io.github.riniwtz.commands;
 
-import java.io.IOException;
-
 /*
  * Checks if command length is less than or greater than arguments needed
  * Checks if command length is equal to 3 or equal to 4
@@ -20,7 +18,6 @@ import java.io.IOException;
  * player.addItemInventory(cmd[2], (int)amount);
  * CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
  */
-
 
 public class GiveCommand extends BaseCommand {
 
@@ -46,15 +43,19 @@ public class GiveCommand extends BaseCommand {
 					if ((amount > 0) && (amount <= AMOUNT_LIMIT)) {
 						player.addItemInventory(cmd[2], (int)amount);
 						// FIXME - GiveItemCommandOutput itemName ex: oak_planks = Oak Planks || red_stained_glass = Red Stained Glass
-						CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
+						CommandOutputMessage.printGivePlayerItemOutput(CommandOutputMessage.getConvertItemIDToItemName(itemName), (int)amount, player);
 					}
 				} else {
 					CommandOutputMessage.printUnknownItemOutput(itemName);
 					CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 				}
-			} else {
-				CommandOutputMessage.printUnknownCommandOutput();
-				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			} else if (!(playerName.equals(player.getName()))) {
+				if (block.exists(cmd) || item.exists(cmd))
+					CommandOutputMessage.printNoPlayerFoundOutput();
+				else {
+					CommandOutputMessage.printUnknownItemOutput(itemName);
+					CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+				}
 			}
 		}
 	}

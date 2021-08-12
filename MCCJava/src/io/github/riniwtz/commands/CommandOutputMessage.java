@@ -59,9 +59,18 @@ public class CommandOutputMessage {
 		System.out.print(out.substring(0, out.length() - 1) + ("<--[HERE]\n"));
 	}
 
-	// WORK IN PROGRESS
-	public static String convertItemIDToItemName(String itemID) {
-		return itemID;
+	public static void printNoPlayerFoundOutput() {
+		System.out.println("No player was found");
+	}
+
+	public static String getConvertItemIDToItemName(String itemID) {
+		String[] itemName = itemID.split("_");
+		StringBuilder itemIDBuilder = new StringBuilder();
+		for (String i : itemName) {
+			itemIDBuilder.append(getUpperCaseFirstChar(i)).append(" ");
+		}
+		itemID = itemIDBuilder.toString();
+		return itemID.substring(0, itemID.length() - 1);
 	}
 	
 	public static String getUpperCaseFirstChar(String text) {
