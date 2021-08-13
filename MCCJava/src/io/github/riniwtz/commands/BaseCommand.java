@@ -10,4 +10,5 @@ public abstract class BaseCommand {
 	protected Player player = new Player();
 	protected Items item = new Items();
 	public abstract void execute(String[] cmd);
+	protected abstract boolean hasCommandHandlerError(String[] cmd);
 }
