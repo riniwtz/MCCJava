@@ -9,7 +9,7 @@ public class Items {
 
 	public Items() {
 		try {
-			File file = new File("MCCJava\\src\\io\\github\\riniwtz\\resources\\items_list").getAbsoluteFile();
+			File file = new File("src\\io\\github\\riniwtz\\resources\\items_list").getAbsoluteFile();
 			Scanner scan = new Scanner(file);
 
 			String itemName;
@@ -27,9 +27,9 @@ public class Items {
 		return item;
 	}
 
-	public boolean exists(String[] cmd) {
+	public boolean exists(String itemName) {
 		for (String i : getItems()) {
-			if (cmd[2].equals(i)) {
+			if (itemName.equals(i)) {
 				return true;
 			}
 		}

@@ -10,7 +10,7 @@ public class Blocks {
 
 	public Blocks() {
 		try {
-			File file = new File("MCCJava\\src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
+			File file = new File("src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
 			Scanner scan = new Scanner(file);
 
 			String blockName;
@@ -28,9 +28,9 @@ public class Blocks {
 		return block;
 	}
 
-	public boolean exists(String[] cmd) {
+	public boolean exists(String blockName) {
 		for (String b : getBlocks()) {
-			if (cmd[2].equals(b)) {
+			if (blockName.equals(b)) {
 				return true;
 			}
 		}
