@@ -3,8 +3,6 @@ import io.github.riniwtz.mcc.Player;
 import io.github.riniwtz.mcc.World;
 
 public class CommandOutputMessage {
-	static String playerName;
-	static Player player = new Player();
 	public static void printMessageOutput(Player player, String message) {
 		System.out.println(("<") + (player.getName()) + (">") + (" ") + (message));
 	}
@@ -62,24 +60,6 @@ public class CommandOutputMessage {
 
 	public static void printNoPlayerFoundOutput() {
 		System.out.println("No player was found");
-	}
-
-	protected static void printCheckCommandLengthErrorOutput(String[] cmd, int range) {
-		if (playerName.equals(player.getName())) {
-			if ((cmd.length < range) || (cmd.length > range)) {
-				CommandOutputMessage.printUnknownCommandOutput();
-				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-			}
-		}
-	}
-
-	protected static void printCheckCommandLengthErrorOutput(String[] cmd, int MIN, int MAX) {
-		if (playerName.equals(player.getName())) {
-			if ((cmd.length < MIN) || (cmd.length > MAX)) {
-				CommandOutputMessage.printUnknownCommandOutput();
-				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
-			}
-		}
 	}
 
 	protected static void printIncorrectArgumentCommandOutput() {
