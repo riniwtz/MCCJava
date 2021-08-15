@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="MCCJava:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="87a5b9b8-f6b2-4b0c-8f6c-dad762de534b" name="Changes" comment="Fixed if-else statements">
+    <list default="true" id="87a5b9b8-f6b2-4b0c-8f6c-dad762de534b" name="Changes" comment="Fixed Directory Relative Path">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/MCCJava_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/GameModeCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/CommandOutputMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/CommandOutputMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/GiveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/GiveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/TimeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/TimeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/mcc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/mcc/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -114,7 +127,28 @@
       <option name="project" value="LOCAL" />
       <updated>1628750778378</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fixed if-else statements">
+      <created>1628780728187</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1628780728187</updated>
+    </task>
+    <task id="LOCAL-00011" summary="workspace.xml">
+      <created>1628780747513</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1628780747513</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fixed Directory Relative Path">
+      <created>1628998381958</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1628998381958</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,17 +171,8 @@
     <MESSAGE value="Updated Code" />
     <MESSAGE value="Fixed getConvertItemIDToItemName() method" />
     <MESSAGE value="Fixed if-else statements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed if-else statements" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/MCCJava/src/io/github/riniwtz/commands/GiveCommand.java</url>
-          <line>85</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="workspace.xml" />
+    <MESSAGE value="Fixed Directory Relative Path" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Directory Relative Path" />
   </component>
 </project>
