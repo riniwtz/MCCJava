@@ -18,4 +18,9 @@ public class KillCommand extends BaseCommand {
 			}
 		}
 	}
+
+	@Override
+	protected boolean hasCommandHandlerError(String[] cmd) {
+		return false;
+	}
 }

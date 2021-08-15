@@ -8,6 +8,7 @@ import io.github.riniwtz.commands.KillCommand;
 import io.github.riniwtz.commands.TimeCommand;
 
 public class Main {
+	// FIXME - Java Reflections (WIP)
 	protected static final GiveCommand GIVE_COMMAND = new GiveCommand();
 	protected static final TimeCommand TIME_COMMAND = new TimeCommand();
 	protected static final KillCommand KILL_COMMAND = new KillCommand();
