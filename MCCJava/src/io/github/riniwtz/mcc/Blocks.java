@@ -1,8 +1,9 @@
 package io.github.riniwtz.mcc;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Objects;
 
 public class Blocks {
 	// TODO - Add all block and item names in blocks_list and items_list files
@@ -10,16 +11,15 @@ public class Blocks {
 
 	public Blocks() {
 		try {
-			File file = new File("src\\io\\github\\riniwtz\\resources\\blocks_list").getAbsoluteFile();
-			Scanner scan = new Scanner(file);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Blocks.class.getResourceAsStream("/io/github/riniwtz/resources/blocks_list"))));
 
+			String line;
 			String blockName;
-			while (scan.hasNextLine()) {
-				blockName = scan.nextLine();
+			while ((line = reader.readLine()) != null) {
+				blockName = line;
 				block.add(blockName);
 			}
-			scan.close();
-		} catch (NumberFormatException | FileNotFoundException e) {
+		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
 	}

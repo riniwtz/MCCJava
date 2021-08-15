@@ -1,24 +1,23 @@
 package io.github.riniwtz.mcc;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Objects;
 
 public class Items {
 	ArrayList<String> item = new ArrayList<>();
 
 	public Items() {
 		try {
-			File file = new File("src\\io\\github\\riniwtz\\resources\\items_list").getAbsoluteFile();
-			Scanner scan = new Scanner(file);
-
+			BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Blocks.class.getResourceAsStream("/io/github/riniwtz/resources/items_list"))));
+			String line;
 			String itemName;
-			while (scan.hasNextLine()) {
-				itemName = scan.nextLine();
+			while ((line = reader.readLine()) != null) {
+				itemName = line;
 				item.add(itemName);
 			}
-			scan.close();
-		} catch (NumberFormatException | FileNotFoundException e) {
+		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
 	}
