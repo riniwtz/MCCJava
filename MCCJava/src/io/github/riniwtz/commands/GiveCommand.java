@@ -17,6 +17,7 @@ package io.github.riniwtz.commands;
  * Checks if amount is greater than 0 and amount is less than the amount limit
  * player.addItemInventory(cmd[2], (int)amount);
  * CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
+ *
  */
 
 public class GiveCommand extends BaseCommand {
@@ -24,9 +25,7 @@ public class GiveCommand extends BaseCommand {
 	private String playerName;
 	private long amount = 1;
 	private boolean isAmountCharacter = false;
-	private final int MINIMUM_ARGUMENT = 3;
-	private final int MAXIMUM_ARGUMENT = 4;
-	
+
 	public long getConvertAmountToLong(String amount) {
 		try {
 			this.amount = Long.parseLong(amount);
@@ -66,6 +65,7 @@ public class GiveCommand extends BaseCommand {
 	
 	@Override
 	protected boolean hasCommandHandlerError(String[] cmd) {
+		int MAXIMUM_ARGUMENT = 4;
 		if (playerName.equals(player.getName())) {
 			if (cmd.length > MAXIMUM_ARGUMENT) {
 				CommandOutputMessage.printUnknownCommandOutput();
@@ -94,6 +94,7 @@ public class GiveCommand extends BaseCommand {
 	
 	@Override
 	public void execute(String[] cmd) {
+		int MINIMUM_ARGUMENT = 3;
 		if (cmd.length < MINIMUM_ARGUMENT) {
 			CommandOutputMessage.printUnknownCommandOutput();
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
