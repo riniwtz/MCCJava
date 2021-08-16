@@ -45,7 +45,7 @@ public class GiveCommand extends BaseCommand {
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
 			return true;
 		}
-		int AMOUNT_LIMIT = 6400;
+		final int AMOUNT_LIMIT = 6400;
 		if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE)) {
 			CommandOutputMessage.printGivePlayerAmountLimitOutput(itemName);
 			return true;
@@ -65,7 +65,7 @@ public class GiveCommand extends BaseCommand {
 	
 	@Override
 	protected boolean hasCommandHandlerError(String[] cmd) {
-		int MAXIMUM_ARGUMENT = 4;
+		final int MAXIMUM_ARGUMENT = 4;
 		if (playerName.equals(player.getName())) {
 			if (cmd.length > MAXIMUM_ARGUMENT) {
 				CommandOutputMessage.printUnknownCommandOutput();
@@ -94,7 +94,7 @@ public class GiveCommand extends BaseCommand {
 	
 	@Override
 	public void execute(String[] cmd) {
-		int MINIMUM_ARGUMENT = 3;
+		final int MINIMUM_ARGUMENT = 3;
 		if (cmd.length < MINIMUM_ARGUMENT) {
 			CommandOutputMessage.printUnknownCommandOutput();
 			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
