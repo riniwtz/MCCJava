@@ -1,4 +1,7 @@
 package io.github.riniwtz.mcc;
+
+import io.github.riniwtz.main.Main;
+
 public class World implements Time {
 	private String worldName = "My World";
 	private float time = 0.0F;
@@ -22,6 +25,7 @@ public class World implements Time {
 	public World() {
 		boolean isNight = getTime() >= 13000;
 	}
+
 	public void addTime(float time) {
 		this.time += time;
 	}
@@ -29,9 +33,9 @@ public class World implements Time {
 		this.time = time;
 	}
 	public float getTime() {
-		float maxTime = 24000F;
-		if (time >= maxTime)
-			this.time = (float) ((this.time / maxTime) - (Math.floor(this.time / maxTime))) * maxTime;
+		final float MAX_TIME = 24000F;
+		if (time >= MAX_TIME)
+			time = (float) ((time / MAX_TIME) - (Math.floor(time / MAX_TIME))) * MAX_TIME;
 
 		return Math.round(time);
 	}
