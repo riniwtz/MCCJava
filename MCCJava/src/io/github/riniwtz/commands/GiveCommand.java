@@ -20,7 +20,7 @@ package io.github.riniwtz.commands;
  *
  */
 
-public class GiveCommand extends BaseCommand {
+public class GiveCommand extends AbstractBaseCommand {
 	private String itemName;
 	private String playerName;
 	private long amount = 1;
@@ -41,23 +41,23 @@ public class GiveCommand extends BaseCommand {
 	
 	protected boolean hasCommandHandlerError(String[] cmd, long amount) {
 		if (amount > Integer.MAX_VALUE) {
-			CommandOutputMessage.printInvalidIntegerOutput(amount);
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			CommandOutputMessage.printInvalidIntegerMessageOutput(amount);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
 		}
 		final int AMOUNT_LIMIT = 6400;
 		if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE)) {
-			CommandOutputMessage.printGivePlayerAmountLimitOutput(itemName);
+			CommandOutputMessage.printGivePlayerAmountLimitMessageOutput(itemName);
 			return true;
 		}
 		if (amount == 0) {
-			CommandOutputMessage.printIntegerIsZeroOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			CommandOutputMessage.printIntegerIsZeroMessageOutput();
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
 		}
 		if (isAmountCharacter) {
-			CommandOutputMessage.printExpectedIntegerOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			CommandOutputMessage.printExpectedIntegerMessageOutput();
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
 		}
 		return false;
@@ -68,23 +68,23 @@ public class GiveCommand extends BaseCommand {
 		final int MAXIMUM_ARGUMENT = 4;
 		if (playerName.equals(player.getName())) {
 			if (cmd.length > MAXIMUM_ARGUMENT) {
-				CommandOutputMessage.printUnknownCommandOutput();
-				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+				CommandOutputMessage.printUnknownCommandMessageOutput();
+				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 				return true;
 			}
 		}
 		if ((!(block.exists(itemName)) && (!(item.exists(itemName))))) {
-			CommandOutputMessage.printUnknownItemOutput(itemName);
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			CommandOutputMessage.printUnknownItemMessageOutput(itemName);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
 		}
 		if (!(playerName.equals(player.getName()))) {
 			if (block.exists(itemName) || item.exists(itemName)) {
 				if (!(cmd.length > MAXIMUM_ARGUMENT))
-					CommandOutputMessage.printNoPlayerFoundOutput();
+					CommandOutputMessage.printNoPlayerFoundMessageOutput();
 				else {
-					CommandOutputMessage.printIncorrectArgumentCommandOutput();
-					CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+					CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
+					CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 				}
 			}
 			return true;
@@ -96,8 +96,8 @@ public class GiveCommand extends BaseCommand {
 	public void execute(String[] cmd) {
 		final int MINIMUM_ARGUMENT = 3;
 		if (cmd.length < MINIMUM_ARGUMENT) {
-			CommandOutputMessage.printUnknownCommandOutput();
-			CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+			CommandOutputMessage.printUnknownCommandMessageOutput();
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 		}
 		if (cmd.length >= MINIMUM_ARGUMENT) {
 			if ((cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:")))
@@ -109,7 +109,7 @@ public class GiveCommand extends BaseCommand {
 				if (cmd.length == 4) amount = getConvertAmountToLong(cmd[3]);
 				if (!(hasCommandHandlerError(cmd, amount))) {
 					player.addItemInventory(cmd[2], (int)amount);
-					CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
+					CommandOutputMessage.printGivePlayerItemMessageOutput(itemName, (int)amount, player);
 				}
 				this.amount = 1;
 			}

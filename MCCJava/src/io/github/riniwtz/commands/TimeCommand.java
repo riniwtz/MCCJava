@@ -1,6 +1,6 @@
 package io.github.riniwtz.commands;
 
-public class TimeCommand extends BaseCommand {
+public class TimeCommand extends AbstractBaseCommand {
 	// FIXME - TimeCommand.java code
 	@Override
 	public void execute(String[] cmd) {
@@ -11,7 +11,7 @@ public class TimeCommand extends BaseCommand {
 					case "add" -> {
 						if (cmd.length == 3) {
 							world.addTime(Float.parseFloat(cmd[2]));
-							CommandOutputMessage.printTimeOutput(cmd[1], world);
+							CommandOutputMessage.printTimeMessageOutput(cmd[1], world);
 						}
 					}
 					case "query" -> {
@@ -19,7 +19,7 @@ public class TimeCommand extends BaseCommand {
 					case "set" -> {
 						if (cmd.length == 3) {
 							world.setTime(Float.parseFloat(cmd[2]));
-							CommandOutputMessage.printTimeOutput(cmd[1], world);
+							CommandOutputMessage.printTimeMessageOutput(cmd[1], world);
 						}
 					}
 					//Not really part of Minecraft cmd. (Only used for fixing bugs)
@@ -30,8 +30,8 @@ public class TimeCommand extends BaseCommand {
 					}
 				}
 			} catch (NumberFormatException e) {
-				CommandOutputMessage.printExpectedFloatOutput();
-				CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+				CommandOutputMessage.printExpectedFloatMessageOutput();
+				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			}
 		}
 	}
