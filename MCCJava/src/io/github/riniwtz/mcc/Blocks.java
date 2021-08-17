@@ -23,11 +23,9 @@ public class Blocks {
 			e.printStackTrace();
 		}
 	}
-
 	public ArrayList<String> getBlocks() {
 		return block;
 	}
-
 	public boolean exists(String blockName) {
 		for (String b : getBlocks()) {
 			if (blockName.equals(b)) {
