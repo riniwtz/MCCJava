@@ -12,19 +12,22 @@ import io.github.riniwtz.mcc.Player;
 - GameModeCommand (WIP)
  */
 
-public class Main {
+public class Main extends Thread {
 	// FIXME - Java Reflections (WIP)
 	private static final GiveCommand GIVE_COMMAND = new GiveCommand();
 	private static final TimeCommand TIME_COMMAND = new TimeCommand();
 	private static final KillCommand KILL_COMMAND = new KillCommand();
 	private static final GameModeCommand GAME_MODE_COMMAND = new GameModeCommand();
+	public static boolean running = false;
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Player player = new Player();
 		String text;
 		String[] cmd;
 
-		while (true) {
+		running = true;
+		while (running) {
 			try { text = sc.nextLine(); }
 			catch (NoSuchElementException e) {
 				e.printStackTrace();
