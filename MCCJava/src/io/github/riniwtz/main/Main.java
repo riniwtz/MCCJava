@@ -30,7 +30,6 @@ public class Main {
 				e.printStackTrace();
 				break;
 			}
-
 			// TODO - Add all commands that are possible from Minecraft commands
 			if ((text.length() > 0) && (text.charAt(0) == '/')) {
 				cmd = text.split(" ");
@@ -39,6 +38,7 @@ public class Main {
 					case "/time" -> TIME_COMMAND.execute(cmd);
 					case "/kill" -> KILL_COMMAND.execute(cmd);
 					case "/gamemode" -> GAME_MODE_COMMAND.execute(cmd);
+					case "/quit" -> System.exit(0);
 					default -> {
 						CommandOutputMessage.printUnknownCommandMessageOutput();
 						CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
