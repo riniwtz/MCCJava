@@ -35,7 +35,6 @@ public class TimeCommand extends AbstractBaseCommand {
 			}
 		}
 	}
-
 	@Override
 	protected boolean hasCommandHandlerError(String[] cmd) {
 		return false;
