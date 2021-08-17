@@ -1,9 +1,8 @@
-package io.github.riniwtz.mcc;
+package io.github.riniwtz.main;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
 import io.github.riniwtz.commands.*;
-
+import io.github.riniwtz.mcc.Player;
 
 /*
 - GiveCommand 98% done
@@ -19,11 +18,9 @@ public class Main {
 	private static final TimeCommand TIME_COMMAND = new TimeCommand();
 	private static final KillCommand KILL_COMMAND = new KillCommand();
 	private static final GameModeCommand GAME_MODE_COMMAND = new GameModeCommand();
-
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Player player = new Player();
-
 		String text;
 		String[] cmd;
 
@@ -43,8 +40,8 @@ public class Main {
 					case "/kill" -> KILL_COMMAND.execute(cmd);
 					case "/gamemode" -> GAME_MODE_COMMAND.execute(cmd);
 					default -> {
-						CommandOutputMessage.printUnknownCommandOutput();
-						CommandOutputMessage.printUnknownCommandDefaultOutput(cmd);
+						CommandOutputMessage.printUnknownCommandMessageOutput();
+						CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 					}
 				}
 			}
