@@ -1,30 +1,11 @@
 package io.github.riniwtz.commands;
 
-/*
- * Checks if command length is less than or greater than arguments needed
- * Checks if command length is equal to 3 or equal to 4
- * Checks if itemName length is greater than 10 and is equals to "minecraft:"
- * "minecraft:" is removed from itemName and prints out the itemName
- * 
- * name is assigned to playerName
- * commandArray(2) is assigned to itemName
- * 
- * Checks if playerName is equal to player.getName() else prints an Error Message
- * Checks if block or item exist else prints an Error message
- * Checks if command length is 4 to convert amount to long
- * Checks if it has command errors
- * 
- * Checks if amount is greater than 0 and amount is less than the amount limit
- * player.addItemInventory(cmd[2], (int)amount);
- * CommandOutputMessage.printGivePlayerItemOutput(itemName, (int)amount, player);
- *
- */
-
 public class GiveCommand extends AbstractBaseCommand {
 	private String itemName;
 	private String playerName;
 	private long amount = 1;
-	private boolean isAmountCharacter = false;
+	private boolean isAmountCharacter;
+	private final int MINIMUM_ARGUMENT = 3;
 
 	public long getConvertAmountToLong(String amount) {
 		try {
@@ -34,85 +15,95 @@ public class GiveCommand extends AbstractBaseCommand {
 		}
 		return this.amount;
 	}
-	
 	public String getSplitString(String text, String letter) {
 		return text.substring(text.indexOf(letter) + 1);
 	}
-	
-	protected boolean hasCommandHandlerError(String[] cmd, long amount) {
+	public boolean checkItemNameStartsWithMinecraft(String[] cmd) {
+		return (cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:"));
+	}
+	public boolean isAmountCorrect(String[] cmd) {
 		if (amount > Integer.MAX_VALUE) {
 			CommandOutputMessage.printInvalidIntegerMessageOutput(amount);
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-			return true;
+			return false;
 		}
 		final int AMOUNT_LIMIT = 6400;
-		if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE)) {
-			CommandOutputMessage.printGivePlayerAmountLimitMessageOutput(itemName);
-			return true;
+		if (playerName.equals(player.getName())) {
+			if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE)) {
+				CommandOutputMessage.printGivePlayerAmountLimitMessageOutput(itemName);
+				return false;
+			}
 		}
 		if (amount == 0) {
 			CommandOutputMessage.printIntegerIsZeroMessageOutput();
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-			return true;
+			return false;
 		}
+		//amount = getConvertAmountToLong(cmd[3]);
 		if (isAmountCharacter) {
 			CommandOutputMessage.printExpectedIntegerMessageOutput();
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
-	
 	@Override
 	protected boolean hasCommandHandlerError(String[] cmd) {
+		if (cmd.length < MINIMUM_ARGUMENT) {
+			CommandOutputMessage.printUnknownCommandMessageOutput();
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			return true;
+		}
+		// Checks error if player matches and command length is greater than the maximum argument
 		final int MAXIMUM_ARGUMENT = 4;
 		if (playerName.equals(player.getName())) {
 			if (cmd.length > MAXIMUM_ARGUMENT) {
-				CommandOutputMessage.printUnknownCommandMessageOutput();
+				CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
 				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 				return true;
 			}
 		}
+		// Checks error if block and item doesn't exist
 		if ((!(block.exists(itemName)) && (!(item.exists(itemName))))) {
 			CommandOutputMessage.printUnknownItemMessageOutput(itemName);
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
 		}
+		// Checks error if (player doesn't match) yet (block or item exists) and checks if (command length is not greater than maximum argument is false)
+		// Checks error if (player doesn't match) yet (block or item exists) and checks if (command length is not greater than maximum argument is true)
 		if (!(playerName.equals(player.getName()))) {
 			if (block.exists(itemName) || item.exists(itemName)) {
-				if (!(cmd.length > MAXIMUM_ARGUMENT))
-					CommandOutputMessage.printNoPlayerFoundMessageOutput();
-				else {
-					CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-					CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+				if (!(cmd.length > MAXIMUM_ARGUMENT)) {
+					if (isAmountCorrect(cmd))
+						CommandOutputMessage.printNoPlayerFoundMessageOutput();
+				}
+				if (cmd.length > MAXIMUM_ARGUMENT) {
+					if (isAmountCorrect(cmd)) {
+						CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
+						CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+					}
 				}
 			}
 			return true;
 		}
-		return false;	
+		return false;
 	}
-	
 	@Override
 	public void execute(String[] cmd) {
-		final int MINIMUM_ARGUMENT = 3;
-		if (cmd.length < MINIMUM_ARGUMENT) {
-			CommandOutputMessage.printUnknownCommandMessageOutput();
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-		}
+		if (cmd.length > 2) playerName = cmd[1];
 		if (cmd.length >= MINIMUM_ARGUMENT) {
-			if ((cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:")))
+			if (checkItemNameStartsWithMinecraft(cmd))
 				cmd[2] = getSplitString(cmd[2], ":");
-
-			playerName = cmd[1];
 			itemName = cmd[2];
-			if (!(hasCommandHandlerError(cmd))) {
-				if (cmd.length == 4) amount = getConvertAmountToLong(cmd[3]);
-				if (!(hasCommandHandlerError(cmd, amount))) {
-					player.addItemInventory(cmd[2], (int)amount);
-					CommandOutputMessage.printGivePlayerItemMessageOutput(itemName, (int)amount, player);
-				}
-				this.amount = 1;
-			}
 		}
+		if (cmd.length == 4) amount = getConvertAmountToLong(cmd[3]);
+		if (!(hasCommandHandlerError(cmd))) {
+			if (isAmountCorrect(cmd)) {
+				player.addItemInventory(itemName, (int)amount);
+				CommandOutputMessage.printGivePlayerItemMessageOutput(itemName, (int)amount, player);
+			}
+			this.amount = 1;
+		}
+		isAmountCharacter = false;
 	}
 }
