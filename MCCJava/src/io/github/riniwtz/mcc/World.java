@@ -39,4 +39,9 @@ public class World implements Time {
 
 		return Math.round(time);
 	}
+
+	@Override
+	public float getRealTime() {
+		return time;
+	}
 }

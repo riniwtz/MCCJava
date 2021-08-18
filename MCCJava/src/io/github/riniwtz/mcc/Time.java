@@ -4,4 +4,5 @@ public interface Time {
 	public void addTime(float time);
 	public void setTime(float time);
 	public float getTime();
+	public float getRealTime();
 }

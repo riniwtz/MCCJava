@@ -18,10 +18,10 @@ public class GiveCommand extends AbstractBaseCommand {
 	public String getSplitString(String text, String letter) {
 		return text.substring(text.indexOf(letter) + 1);
 	}
-	public boolean checkItemNameStartsWithMinecraft(String[] cmd) {
+	public boolean isPrefixValid(String[] cmd) {
 		return (cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:"));
 	}
-	public boolean isAmountCorrect(String[] cmd) {
+	public boolean isAmountValid(String[] cmd) {
 		if (amount > Integer.MAX_VALUE) {
 			CommandOutputMessage.printInvalidIntegerMessageOutput(amount);
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
@@ -74,11 +74,11 @@ public class GiveCommand extends AbstractBaseCommand {
 		if (!(playerName.equals(player.getName()))) {
 			if (block.exists(itemName) || item.exists(itemName)) {
 				if (!(cmd.length > MAXIMUM_ARGUMENT)) {
-					if (isAmountCorrect(cmd))
+					if (isAmountValid(cmd))
 						CommandOutputMessage.printNoPlayerFoundMessageOutput();
 				}
 				if (cmd.length > MAXIMUM_ARGUMENT) {
-					if (isAmountCorrect(cmd)) {
+					if (isAmountValid(cmd)) {
 						CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
 						CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 					}
@@ -92,13 +92,13 @@ public class GiveCommand extends AbstractBaseCommand {
 	public void execute(String[] cmd) {
 		if (cmd.length > 2) playerName = cmd[1];
 		if (cmd.length >= MINIMUM_ARGUMENT) {
-			if (checkItemNameStartsWithMinecraft(cmd))
+			if (isPrefixValid(cmd))
 				cmd[2] = getSplitString(cmd[2], ":");
 			itemName = cmd[2];
 		}
 		if (cmd.length == 4) amount = getConvertAmountToLong(cmd[3]);
 		if (!(hasCommandHandlerError(cmd))) {
-			if (isAmountCorrect(cmd)) {
+			if (isAmountValid(cmd)) {
 				player.addItemInventory(itemName, (int)amount);
 				CommandOutputMessage.printGivePlayerItemMessageOutput(itemName, (int)amount, player);
 			}

@@ -3,6 +3,15 @@ import io.github.riniwtz.mcc.Player;
 import io.github.riniwtz.mcc.World;
 
 public class CommandOutputMessage {
+
+	public static void printExpectedWhitespaceMessageOutput() {
+		System.out.println("Expected whitespace to end one argument, but found trailing data");
+	}
+
+	public static void printTickIsNegative() {
+		System.out.println("Tick count must be non-negative");
+	}
+
 	public static void printSetGameModeMessageOutput(World world) {
 		System.out.println("Set own game mode to " + toUpperCaseFirstChar(world.getGameModeName()) + " Mode");
 	}
@@ -19,19 +28,28 @@ public class CommandOutputMessage {
 		System.out.println(("Gave ") + (amount) + (" ") + ("[") + (getConvertItemIDToItemName(item)) + ("] to ") + (player.getName()));
 	}
 
-	public static void printTimeMessageOutput(String command, World world) {
-		if (command.equals("set") || command.equals("add"))
-			System.out.println("Set the time to " + (int) world.getTime());
-		
-		if (command.equals("query"))
-			System.out.println("The time is " + (int) world.getTime()); // getTime() should be query time (WIP)
+	public static void printTimeMessageOutput(String cmd, World world, boolean isRealTime) {
+		if (isRealTime) {
+			if (cmd.equals("set"))
+				System.out.println("Set the time to " + (int) world.getRealTime());
+		} else {
+			if (cmd.equals("set") || cmd.equals("add"))
+				System.out.println("Set the time to " + (int) world.getTime());
+
+			if (cmd.equals("query"))
+				System.out.println("The time is " + (int) world.getTime()); // getTime() should be query time (WIP)
+		}
 	}
 	
 	public static void printKillPlayerMessageOutput(String name) {
 		System.out.println((name) + (" fell out of the world"));
 		System.out.println(("Killed ") + (name));
 	}
-	
+
+	public static void printInvalidFloatMessageOutput(String cmd) {
+		System.out.println("Invalid float '" + cmd + "'");
+	}
+
 	public static void printExpectedFloatMessageOutput() {
 		System.out.println("Expected float");
 	}
