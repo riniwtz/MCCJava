@@ -31,9 +31,18 @@ public class CommandOutputMessage {
 	public static void printTimeMessageOutput(String timeMode, World world) {
 		switch (timeMode) {
 			case "set" -> System.out.println("Set the time to " + world.getGameTicks());
-			case "add" -> System.out.println("Set the time to " + (int) world.getTime());
+			case "add" -> System.out.println("Set the time to " + world.getTime().intValue());
 		}
 	}
+
+	public static void printTimeQueryMessageOutput(String queryMode, World world) {
+		switch (queryMode) {
+			case "day" -> System.out.println("The time is " + world.getGameTicks() / world.getMaxTime());
+			case "daytime" -> System.out.println("The time is " + world.getTime().intValue());
+			case "gametime" -> {}
+		}
+	}
+
 	
 	public static void printKillPlayerMessageOutput(String name) {
 		System.out.println((name) + (" fell out of the world"));
