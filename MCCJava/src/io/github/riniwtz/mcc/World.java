@@ -6,9 +6,18 @@ import java.math.RoundingMode;
 
 public class World implements Time {
 	private String worldName = "My World";
-	private int gameTicks = 0;
+	private int gameTime = 0;
+	private int gameTicks;
+
 	private double time;
 	private boolean stopTime = false;
+	private final int MAX_TIME = 24000;
+
+	public World() {
+		boolean isNight = false;
+		gameTime += 20;
+		gameTicks += gameTime;
+	}
 
 	public GameMode gamemode;
 	public enum GameMode {
@@ -25,9 +34,6 @@ public class World implements Time {
 	}
 	public GameMode getGameMode() {
 		return gamemode;
-	}
-	public World() {
-		boolean isNight = false;
 	}
 
 	public void addTime(double time) {
@@ -46,7 +52,6 @@ public class World implements Time {
 	 * https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
 	 */
 	public BigDecimal getTime() {
-		final double MAX_TIME = 24000D;
 		BigDecimal bigDecimal;
 		if (time >= MAX_TIME) {
 			bigDecimal = BigDecimal.valueOf(time)
@@ -64,5 +69,9 @@ public class World implements Time {
 	@Override
 	public int getGameTicks() {
 		return gameTicks;
+	}
+
+	public int getMaxTime() {
+		return MAX_TIME;
 	}
 }

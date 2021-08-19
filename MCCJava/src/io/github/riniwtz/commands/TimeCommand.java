@@ -4,17 +4,14 @@ public class TimeCommand extends AbstractBaseCommand {
 	// FIXME - TimeCommand.java code
 
 	private final int RANGE = 3;
-	private String timeMode = "";
+	private String timeMode;
+	private String queryMode;
 	private double time;
 	private boolean isTimeCharacter;
 
-	private void setTime(double time) {
-		this.time = time;
-	}
-
 	public double getConvertTimeToDouble(String time) {
 		try {
-			setTime(Double.parseDouble(time));
+			this.time = Double.parseDouble(time);
 		} catch (NumberFormatException e) {
 			this.isTimeCharacter = true;
 		}
@@ -27,26 +24,32 @@ public class TimeCommand extends AbstractBaseCommand {
 			return false;
 		}
 
-		if (cmd.length == 3) {
-			if (isTimeCharacter) {
-				if ((cmd[2].charAt(0) == '-') || (cmd[2].charAt(0) == '.'))
-					CommandOutputMessage.printInvalidFloatMessageOutput(cmd[2]);
-				else
-					CommandOutputMessage.printExpectedFloatMessageOutput();
+		String numberList = "1234567890";
+		if (isTimeCharacter) {
+			queryMode = cmd[2];
+			switch (queryMode) {
+				case "day", "daytime", "gametime" -> {
+					return true;
+				}
+			}
 
-				for (int i = 0; i < 10; i++) {
-					if ((cmd[2].charAt(0) == (char) i) && (cmd[2].substring(1).contains(","))) {
+			for (int i = 0; i < numberList.length(); i++) {
+				if (cmd[2].charAt(0) == numberList.charAt(i)) {
+					if (cmd[2].substring(1).contains(",")) {
 						CommandOutputMessage.printExpectedWhitespaceMessageOutput();
+						CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+						return false;
 					}
 				}
-				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-				return false;
 			}
-		}
 
-		if (cmd.length == RANGE) {
-			setTime(getConvertTimeToDouble(cmd[2]));
-			return !isTimeCharacter;
+			if ((cmd[2].charAt(0) == '-') || (cmd[2].charAt(0) == '.'))
+				CommandOutputMessage.printInvalidFloatMessageOutput(cmd[2]);
+			else
+				CommandOutputMessage.printExpectedFloatMessageOutput();
+
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			return false;
 		}
 
 		return true;
@@ -56,6 +59,12 @@ public class TimeCommand extends AbstractBaseCommand {
 	protected boolean hasCommandHandlerError(String[] cmd) {
 		if (cmd.length == (RANGE - 2)) {
 			CommandOutputMessage.printUnknownCommandMessageOutput();
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			return true;
+		}
+
+		if (cmd.length > RANGE) {
+			CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
 		}
@@ -78,14 +87,25 @@ public class TimeCommand extends AbstractBaseCommand {
 	@Override
 	public void execute(String[] cmd) {
 		if (cmd.length >= 2) timeMode = cmd[1];
+		if (cmd.length == RANGE) time = getConvertTimeToDouble(cmd[2]);
 		if (!(hasCommandHandlerError(cmd))) {
 			if (isTimeValid(cmd)) {
 				switch (timeMode) {
 					case "add" -> {
-						world.addTime(time);
+						if (time > Integer.MAX_VALUE)
+							world.addTime(Integer.MAX_VALUE);
+						else
+							world.addTime(time);
 						CommandOutputMessage.printTimeMessageOutput(timeMode, world);
 					}
-					case "query" -> System.out.println(timeMode);
+
+					/*
+						day	= Returns the number of days elapsed in the game (each day is 24000 game ticks)
+						daytime	= Returns the number of game ticks since dawn
+						gametime = Returns the age of the Minecraft world in game ticks
+					 */
+
+					case "query" -> CommandOutputMessage.printTimeQueryMessageOutput(queryMode, world);
 					case "set" -> {
 						if (time > Integer.MAX_VALUE)
 							world.setTime(Integer.MAX_VALUE);
@@ -94,8 +114,7 @@ public class TimeCommand extends AbstractBaseCommand {
 
 						CommandOutputMessage.printTimeMessageOutput(timeMode, world);
 					}
-					//Not really part of Minecraft cmd. (Only used for fixing bugs)
-					case "get" -> System.out.println((int) world.getTime());
+					case "get" -> System.out.println(world.getTime().intValue());
 				}
 			}
 			isTimeCharacter = false;
