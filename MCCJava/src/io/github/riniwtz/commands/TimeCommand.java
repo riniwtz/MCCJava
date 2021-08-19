@@ -4,13 +4,17 @@ public class TimeCommand extends AbstractBaseCommand {
 	// FIXME - TimeCommand.java code
 
 	private final int RANGE = 3;
-	private String timeAction = "";
-	private float time;
+	private String timeMode = "";
+	private double time;
 	private boolean isTimeCharacter;
 
-	public float getConvertTimeToFloat(String time) {
+	private void setTime(double time) {
+		this.time = time;
+	}
+
+	public double getConvertTimeToDouble(String time) {
 		try {
-			this.time = Float.parseFloat(time);
+			setTime(Double.parseDouble(time));
 		} catch (NumberFormatException e) {
 			this.isTimeCharacter = true;
 		}
@@ -18,7 +22,7 @@ public class TimeCommand extends AbstractBaseCommand {
 	}
 
 	public boolean isTimeValid(String[] cmd) {
-		if ((time < 0) && (!isTimeCharacter)) {
+		if ((time < 0.0D) && (!isTimeCharacter)) {
 			CommandOutputMessage.printTickIsNegative();
 			return false;
 		}
@@ -40,45 +44,55 @@ public class TimeCommand extends AbstractBaseCommand {
 			}
 		}
 
+		if (cmd.length == RANGE) {
+			setTime(getConvertTimeToDouble(cmd[2]));
+			return !isTimeCharacter;
+		}
+
 		return true;
 	}
 
 	@Override
 	protected boolean hasCommandHandlerError(String[] cmd) {
-		if (cmd.length == 1) {
+		if (cmd.length == (RANGE - 2)) {
 			CommandOutputMessage.printUnknownCommandMessageOutput();
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
 		}
 
-		return false;
-	}
-
-	private void checkTimeActionValid(String[] cmd) {
-		if (cmd.length == 2) {
-			switch (timeAction) {
-				case "add", "query", "set" -> CommandOutputMessage.printUnknownCommandMessageOutput();
-				default -> CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
+		// Check time mode error
+		if (cmd.length == (RANGE - 1)) {
+			if (!(timeMode.equals("get"))) {
+				switch (timeMode) {
+					case "add", "query", "set" -> CommandOutputMessage.printUnknownCommandMessageOutput();
+					default -> CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
+				}
+				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+				return true;
 			}
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 		}
+
+		return false;
 	}
 
 	@Override
 	public void execute(String[] cmd) {
-		if (cmd.length < RANGE) checkTimeActionValid(cmd);
-		if (cmd.length == 3) time = getConvertTimeToFloat(cmd[2]);
+		if (cmd.length >= 2) timeMode = cmd[1];
 		if (!(hasCommandHandlerError(cmd))) {
 			if (isTimeValid(cmd)) {
-				switch (timeAction) {
+				switch (timeMode) {
 					case "add" -> {
 						world.addTime(time);
-						CommandOutputMessage.printTimeMessageOutput(cmd[1], world, false);
+						CommandOutputMessage.printTimeMessageOutput(timeMode, world);
 					}
-					case "query" -> {}
+					case "query" -> System.out.println(timeMode);
 					case "set" -> {
-						world.setTime(time);
-						CommandOutputMessage.printTimeMessageOutput(cmd[1], world, true);
+						if (time > Integer.MAX_VALUE)
+							world.setTime(Integer.MAX_VALUE);
+						else
+							world.setTime(time);
+
+						CommandOutputMessage.printTimeMessageOutput(timeMode, world);
 					}
 					//Not really part of Minecraft cmd. (Only used for fixing bugs)
 					case "get" -> System.out.println((int) world.getTime());
@@ -86,37 +100,5 @@ public class TimeCommand extends AbstractBaseCommand {
 			}
 			isTimeCharacter = false;
 		}
-
-
-//		if ((cmd.length == 2) || (cmd.length == 3)) {
-//			//CommandOutputMessage.printCheckCommandLengthErrorOutput(cmd, 2, 3);
-//			try {
-//				switch (cmd[1]) {
-//					case "add" -> {
-//						if (cmd.length == 3) {
-//							world.addTime(Float.parseFloat(cmd[2]));
-//							CommandOutputMessage.printTimeMessageOutput(cmd[1], world);
-//						}
-//					}
-//					case "query" -> {
-//					}
-//					case "set" -> {
-//						if (cmd.length == 3) {
-//							world.setTime(Float.parseFloat(cmd[2]));
-//							CommandOutputMessage.printTimeMessageOutput(cmd[1], world);
-//						}
-//					}
-//					//Not really part of Minecraft cmd. (Only used for fixing bugs)
-//					case "get" -> {
-//						if (cmd.length == 2) {
-//							System.out.println((int) world.getTime());
-//						}
-//					}
-//				}
-//			} catch (NumberFormatException e) {
-//				CommandOutputMessage.printExpectedFloatMessageOutput();
-//				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-//			}
-//		}
 	}
 }
