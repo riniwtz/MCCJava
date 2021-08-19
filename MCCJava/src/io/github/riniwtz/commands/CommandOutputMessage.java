@@ -28,16 +28,10 @@ public class CommandOutputMessage {
 		System.out.println(("Gave ") + (amount) + (" ") + ("[") + (getConvertItemIDToItemName(item)) + ("] to ") + (player.getName()));
 	}
 
-	public static void printTimeMessageOutput(String cmd, World world, boolean isRealTime) {
-		if (isRealTime) {
-			if (cmd.equals("set"))
-				System.out.println("Set the time to " + (int) world.getRealTime());
-		} else {
-			if (cmd.equals("set") || cmd.equals("add"))
-				System.out.println("Set the time to " + (int) world.getTime());
-
-			if (cmd.equals("query"))
-				System.out.println("The time is " + (int) world.getTime()); // getTime() should be query time (WIP)
+	public static void printTimeMessageOutput(String timeMode, World world) {
+		switch (timeMode) {
+			case "set" -> System.out.println("Set the time to " + world.getGameTicks());
+			case "add" -> System.out.println("Set the time to " + (int) world.getTime());
 		}
 	}
 	
