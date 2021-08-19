@@ -1,8 +1,10 @@
 package io.github.riniwtz.mcc;
 
+import java.math.BigDecimal;
+
 public interface Time {
 	void addTime(double timeDouble);
 	void setTime(double timeDouble);
-	double getTime();
+	BigDecimal getTime();
 	int getGameTicks();
 }
