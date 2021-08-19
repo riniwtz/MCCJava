@@ -1,10 +1,10 @@
 package io.github.riniwtz.mcc;
 
-import io.github.riniwtz.main.Main;
-
 public class World implements Time {
 	private String worldName = "My World";
-	private float time = 0.0F;
+	private int gameTicks = 0;
+	private double timeDouble = getTime();
+	private boolean stopTime = false;
 
 	public GameMode gamemode;
 	public enum GameMode {
@@ -26,22 +26,25 @@ public class World implements Time {
 		boolean isNight = getTime() >= 13000;
 	}
 
-	public void addTime(float time) {
-		this.time += time;
+	public void addTime(double timeDouble) {
+		this.timeDouble += (float) timeDouble;
 	}
-	public void setTime(float time) {
-		this.time = time;
+	public void setTime(double timeDouble) {
+		this.timeDouble = timeDouble;
+		gameTicks = (int) timeDouble;
 	}
-	public float getTime() {
-		final float MAX_TIME = 24000F;
-		if (time >= MAX_TIME)
-			time = (float) ((time / MAX_TIME) - (Math.floor(time / MAX_TIME))) * MAX_TIME;
-
-		return Math.round(time);
+	public double getTime() {
+		final double MAX_TIME = 24000D;
+		if (timeDouble >= MAX_TIME) {
+			double firstComputation = this.timeDouble / MAX_TIME;
+			double secondComputation = Math.floor(this.timeDouble / MAX_TIME);
+			timeDouble = (firstComputation - secondComputation) * MAX_TIME;
+		}
+		return Math.round(timeDouble);
 	}
 
 	@Override
-	public float getRealTime() {
-		return time;
+	public int getGameTicks() {
+		return gameTicks;
 	}
 }
