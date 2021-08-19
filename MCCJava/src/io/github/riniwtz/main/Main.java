@@ -12,7 +12,7 @@ import io.github.riniwtz.mcc.Player;
 - GameModeCommand (WIP)
  */
 
-public class Main extends Thread {
+public class Main {
 	// FIXME - Java Reflections (WIP)
 	private static final GiveCommand GIVE_COMMAND = new GiveCommand();
 	private static final TimeCommand TIME_COMMAND = new TimeCommand();
@@ -37,7 +37,6 @@ public class Main extends Thread {
 			if ((text.length() > 0) && (text.charAt(0) == '/')) {
 				cmd = text.split(" ");
 				switch (cmd[0]) {
-					case "/give" -> GIVE_COMMAND.execute(cmd);
 					case "/time" -> TIME_COMMAND.execute(cmd);
 					case "/kill" -> KILL_COMMAND.execute(cmd);
 					case "/gamemode" -> GAME_MODE_COMMAND.execute(cmd);
