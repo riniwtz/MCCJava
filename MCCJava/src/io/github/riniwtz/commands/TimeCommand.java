@@ -20,7 +20,7 @@ public class TimeCommand extends AbstractBaseCommand {
 
 	public boolean isTimeValid(String[] cmd) {
 		if ((time < 0.0D) && (!isTimeCharacter)) {
-			CommandOutputMessage.printTickIsNegative();
+			CommandOutputMessage.printTickIsNegativeMessageOutput();
 			return false;
 		}
 
