@@ -39,7 +39,6 @@ public class GiveCommand extends AbstractBaseCommand {
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return false;
 		}
-		//amount = getConvertAmountToLong(cmd[3]);
 		if (isAmountCharacter) {
 			CommandOutputMessage.printExpectedIntegerMessageOutput();
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
