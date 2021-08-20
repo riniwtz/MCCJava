@@ -34,16 +34,22 @@ public class Main implements Runnable {
 		}
 	}
 
+	/*
+	The length of nickname should be at least 3 and no more than 16 characters, and should not start with the '-' symbol!
+	abcdefghijklmnop
+	 */
 	private static void initializeName() {
 		String name;
 		boolean hasName = false;
 		do {
+			System.out.print("Enter your name: ");
 			try {
 				name = sc.nextLine();
-				if (name.length() > 0) {
+				if (!(name.charAt(0) == '-') && (name.length() >= 3) && (name.length() <= 16)) {
 					player.setName(name);
 					hasName = true;
 				}
+				else System.out.println("The length of nickname should be at least 3 and no more than 16 characters, and should not start with the '-' symbol!");
 			}
 			catch (NoSuchElementException e) {
 				e.printStackTrace();
@@ -62,7 +68,6 @@ public class Main implements Runnable {
 	@Override
 	public void run() {
 		printProgramInfo();
-		System.out.print("Enter your name: ");
 		initializeName();
 		System.out.println("Type a message or a command");
 		while (true) {
