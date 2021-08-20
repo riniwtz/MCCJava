@@ -2,13 +2,29 @@ package io.github.riniwtz.commands;
 import io.github.riniwtz.mcc.Player;
 import io.github.riniwtz.mcc.World;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Objects;
+
 public class CommandOutputMessage {
+	protected static BufferedReader helpCommandList = new BufferedReader(new InputStreamReader(Objects.requireNonNull(CommandOutputMessage.class.getResourceAsStream("/io/github/riniwtz/resources/help_command_list"))));
+	public static void printHelpCommandListMessageOutput() {
+		try {
+			String line;
+			while ((line = helpCommandList.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (NumberFormatException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void printExpectedWhitespaceMessageOutput() {
 		System.out.println("Expected whitespace to end one argument, but found trailing data");
 	}
 
-	public static void printTickIsNegative() {
+	public static void printTickIsNegativeMessageOutput() {
 		System.out.println("Tick count must be non-negative");
 	}
 
@@ -42,7 +58,6 @@ public class CommandOutputMessage {
 			case "gametime" -> {}
 		}
 	}
-
 	
 	public static void printKillPlayerMessageOutput(String name) {
 		System.out.println((name) + (" fell out of the world"));
