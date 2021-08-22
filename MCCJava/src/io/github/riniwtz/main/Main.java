@@ -34,10 +34,6 @@ public class Main implements Runnable {
 		}
 	}
 
-	/*
-	The length of nickname should be at least 3 and no more than 16 characters, and should not start with the '-' symbol!
-	abcdefghijklmnop
-	 */
 	private static void initializeName() {
 		String name;
 		boolean hasName = false;
