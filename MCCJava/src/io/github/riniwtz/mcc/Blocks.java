@@ -2,36 +2,50 @@ package io.github.riniwtz.mcc;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Blocks {
-	// TODO - Add all block and item names in blocks_list and items_list files
-	ArrayList<String> block = new ArrayList<>();
+	HashMap<String, String> blockMap = new HashMap<>();
 
 	public Blocks() {
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Blocks.class.getResourceAsStream("/io/github/riniwtz/resources/blocks_list"))));
-
-			String line;
-			String blockName;
-			while ((line = reader.readLine()) != null) {
-				blockName = line;
-				block.add(blockName);
+			BufferedReader blocksIDList = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Blocks.class.getResourceAsStream("/io/github/riniwtz/resources/blocks_id_list"))));
+			String blockID;
+			while (((blockID = blocksIDList.readLine()) != null)) {
+				blockMap.put(blockID, getConvertItemIDToItemName(blockID));
 			}
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<String> getBlocks() {
-		return block;
+	private static String toUpperCaseFirstChar(String text) {
+		return (text.substring(0, 1).toUpperCase()) + (text.substring(1).toLowerCase());
 	}
+
+	private String getConvertItemIDToItemName(String itemID) {
+		String[] itemName = itemID.split("_");
+		StringBuilder itemIDBuilder = new StringBuilder();
+		for (String i : itemName) {
+			itemIDBuilder.append(toUpperCaseFirstChar(i)).append(" ");
+		}
+		itemID = itemIDBuilder.toString();
+		return itemID.substring(0, itemID.length() - 1);
+	}
+
+	public HashMap<String, String> getBlockMap() {
+		return blockMap;
+	}
+
+	// value
 	public boolean exists(String blockName) {
-		for (String b : getBlocks()) {
-			if (blockName.equals(b)) {
+		String[] blockIDCollection = blockMap.keySet().toArray(new String[0]);
+		for (String b : blockIDCollection) {
+			if (blockName.equals(b))
 				return true;
-			}
 		}
 		return false;
 	}
+
+
 }
