@@ -1,7 +1,7 @@
 package io.github.riniwtz.commands;
 
 public class GiveCommand extends AbstractBaseCommand {
-	private String itemName;
+	private String itemID;
 	private String playerName;
 	private long amount = 1;
 	private boolean isAmountCharacter;
@@ -30,7 +30,7 @@ public class GiveCommand extends AbstractBaseCommand {
 		final int AMOUNT_LIMIT = 6400;
 		if (playerName.equals(player.getName())) {
 			if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE)) {
-				CommandOutputMessage.printGivePlayerAmountLimitMessageOutput(itemName);
+				CommandOutputMessage.printGivePlayerAmountLimitMessageOutput(itemID);
 				return false;
 			}
 		}
@@ -63,15 +63,15 @@ public class GiveCommand extends AbstractBaseCommand {
 			}
 		}
 		// Checks error if block and item doesn't exist
-		if ((!(block.exists(itemName)) && (!(item.exists(itemName))))) {
-			CommandOutputMessage.printUnknownItemMessageOutput(itemName);
+		if ((!(block.exists(itemID)) && (!(item.exists(itemID))))) {
+			CommandOutputMessage.printUnknownItemMessageOutput(itemID);
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
 		}
 		// Checks error if (player doesn't match) yet (block or item exists) and checks if (command length is not greater than maximum argument is false)
 		// Checks error if (player doesn't match) yet (block or item exists) and checks if (command length is not greater than maximum argument is true)
 		if (!(playerName.equals(player.getName()))) {
-			if (block.exists(itemName) || item.exists(itemName)) {
+			if (block.exists(itemID) || item.exists(itemID)) {
 				if (!(cmd.length > MAXIMUM_ARGUMENT)) {
 					if (isAmountValid(cmd))
 						CommandOutputMessage.printNoPlayerFoundMessageOutput();
@@ -93,13 +93,13 @@ public class GiveCommand extends AbstractBaseCommand {
 		if (cmd.length >= MINIMUM_ARGUMENT) {
 			if (isPrefixValid(cmd))
 				cmd[2] = getSplitString(cmd[2], ":");
-			itemName = cmd[2];
+			itemID = cmd[2];
 		}
 		if (cmd.length == 4) amount = getConvertAmountToLong(cmd[3]);
 		if (!(hasCommandHandlerError(cmd))) {
 			if (isAmountValid(cmd)) {
-				player.addItemInventory(itemName, (int)amount);
-				CommandOutputMessage.printGivePlayerItemMessageOutput(itemName, (int)amount, player);
+				player.addItemInventory(itemID, (int)amount);
+				CommandOutputMessage.printGivePlayerItemMessageOutput(itemID, (int)amount, player);
 			}
 			this.amount = 1;
 		}
