@@ -63,7 +63,7 @@ public class GiveCommand extends AbstractBaseCommand {
 			}
 		}
 		// Checks error if block and item doesn't exist
-		if ((!(block.exists(itemID)) && (!(item.exists(itemID))))) {
+		if ((!(block.exists(itemID)) || (!(item.exists(itemID))))) {
 			CommandOutputMessage.printUnknownItemMessageOutput(itemID);
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return true;
