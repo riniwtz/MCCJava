@@ -1,7 +1,6 @@
 package io.github.riniwtz.commands;
 
 public class HelpCommand extends AbstractBaseCommand {
-    private String commandName;
     private boolean isCountHasCharacter = false;
     private long countValue;
 
