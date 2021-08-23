@@ -7,10 +7,20 @@ import io.github.riniwtz.mcc.World;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class CommandOutputMessage {
+
+	public static void printCommandInsufficientPermissionsMessageOutput() {
+		System.out.println("Unknown command or insufficient permissions");
+	}
+
+	public static void printHelpCommandMessageOutput(String command, String argument1, String argument2, String argument3) {
+		switch (command) {
+			case "give" -> System.out.println("/" + command + " " + argument1 + " " + argument2 + " " + argument3);
+		}
+	}
+
 	protected static final BufferedReader HELP_COMMAND_LIST = new BufferedReader(new InputStreamReader(Objects.requireNonNull(CommandOutputMessage.class.getResourceAsStream("/io/github/riniwtz/resources/help_command_list"))));
 
 	public static void printHelpCommandListMessageOutput() {
@@ -119,15 +129,15 @@ public class CommandOutputMessage {
 		System.out.println("Incorrect argument for command");
 	}
 
-	private static String getConvertItemIDToItemName(String itemID) {
-		String[] itemName = itemID.split("_");
-		StringBuilder itemIDBuilder = new StringBuilder();
-		for (String i : itemName) {
-			itemIDBuilder.append(toUpperCaseFirstChar(i)).append(" ");
-		}
-		itemID = itemIDBuilder.toString();
-		return itemID.substring(0, itemID.length() - 1);
-	}
+//	private static String getConvertItemIDToItemName(String itemID) {
+//		String[] itemName = itemID.split("_");
+//		StringBuilder itemIDBuilder = new StringBuilder();
+//		for (String i : itemName) {
+//			itemIDBuilder.append(toUpperCaseFirstChar(i)).append(" ");
+//		}
+//		itemID = itemIDBuilder.toString();
+//		return itemID.substring(0, itemID.length() - 1);
+//	}
 
 	private static String toUpperCaseFirstChar(String text) {
 		return (text.substring(0, 1).toUpperCase()) + (text.substring(1).toLowerCase());
