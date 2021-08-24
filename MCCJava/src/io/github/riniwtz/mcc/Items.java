@@ -19,9 +19,6 @@ public class Items {
 			e.printStackTrace();
 		}
 	}
-	private static String toUpperCaseFirstChar(String text) {
-		return (text.substring(0, 1).toUpperCase()) + (text.substring(1).toLowerCase());
-	}
 
 	private String getConvertItemIDToItemName(String itemID) {
 		if (itemID.equals("experience_bottle"))
@@ -46,9 +43,11 @@ public class Items {
 		for (String i : itemName) {
 			itemIDBuilder.append(toUpperCaseFirstChar(i)).append(" ");
 		}
-		String itemNameConverted = itemIDBuilder.toString();
+		return itemIDBuilder.substring(0, itemIDBuilder.length() - 1);
+	}
 
-		return itemNameConverted.substring(0, itemID.length() - 1);
+	private static String toUpperCaseFirstChar(String text) {
+		return (text.substring(0, 1).toUpperCase()) + (text.substring(1).toLowerCase());
 	}
 
 	public HashMap<String, String> getItemMap() {
@@ -56,10 +55,10 @@ public class Items {
 	}
 
 	// value
-	public boolean exists(String itemName) {
+	public boolean exists(String itemID) {
 		String[] itemIDCollection = itemMap.keySet().toArray(new String[0]);
-		for (String b : itemIDCollection) {
-			if (itemName.equals(b))
+		for (String i : itemIDCollection) {
+			if (itemID.equals(i))
 				return true;
 		}
 		return false;
