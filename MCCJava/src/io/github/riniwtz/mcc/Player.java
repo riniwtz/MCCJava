@@ -1,34 +1,31 @@
 package io.github.riniwtz.mcc;
-import java.util.ArrayList;
+
+import java.io.*;
 
 public class Player extends Inventory {
-	private String name;
+	private String player = getPlayerName();
 	private int health = 20;
-	private ArrayList<String> player = new ArrayList<>();
 
-	public Player() {
-		setName("riniwtz");
-		player.add(getName());
+	public void write(String text) {
+		try {
+			BufferedWriter playerWriter = new BufferedWriter(new FileWriter("players.txt"));
+			playerWriter.write(text);
+			playerWriter.close();
+		} catch (NumberFormatException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	Player(String name) {
-		setName(name);
-	}
-
-	public ArrayList<String> getPlayers() {
-		return player;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public void setPlayerName(String player) {
+		this.player = player;
+	}
+
+	public String getPlayerName() {
+		return player;
 	}
 	
 	public int getHealth() {
