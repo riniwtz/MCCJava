@@ -6,8 +6,11 @@ public class GameModeCommand extends AbstractBaseCommand {
     private static final int MAXIMUM_ARGUMENT = 3;
     private String gamemode;
     private String playerName;
-    @Override
-    public void execute(String[] cmd) {
+
+    public GameModeCommand() {
+        execute();
+    }
+    public void execute() {
         if (cmd.length > 1) gamemode = cmd[1];
         if (cmd.length > MINIMUM_ARGUMENT) playerName = cmd[2];
     	if (!(hasCommandHandlerError(cmd))) {
@@ -35,10 +38,10 @@ public class GameModeCommand extends AbstractBaseCommand {
             }
     	}
     }
-    @Override
+
     protected boolean hasCommandHandlerError(String[] cmd) {
         if ((cmd.length > MINIMUM_ARGUMENT) && (cmd.length <= MAXIMUM_ARGUMENT)) {
-            if (!(playerName.equals(player.getName()))) {
+            if (!(playerName.equals(player.getPlayerName()))) {
                 CommandOutputMessage.printNoPlayerFoundMessageOutput();
                 return true;
             }
