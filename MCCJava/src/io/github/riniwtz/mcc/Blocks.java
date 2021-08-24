@@ -19,9 +19,6 @@ public class Blocks {
 			e.printStackTrace();
 		}
 	}
-	private static String toUpperCaseFirstChar(String text) {
-		return (text.substring(0, 1).toUpperCase()) + (text.substring(1).toLowerCase());
-	}
 
 	private String getConvertItemIDToItemName(String itemID) {
 		String[] itemName = itemID.split("_");
@@ -29,8 +26,11 @@ public class Blocks {
 		for (String i : itemName) {
 			itemIDBuilder.append(toUpperCaseFirstChar(i)).append(" ");
 		}
-		itemID = itemIDBuilder.toString();
-		return itemID.substring(0, itemID.length() - 1);
+		return itemIDBuilder.substring(0, itemIDBuilder.length() - 1);
+	}
+
+	private static String toUpperCaseFirstChar(String text) {
+		return (text.substring(0, 1).toUpperCase()) + (text.substring(1).toLowerCase());
 	}
 
 	public HashMap<String, String> getBlockMap() {
@@ -38,14 +38,12 @@ public class Blocks {
 	}
 
 	// value
-	public boolean exists(String blockName) {
+	public boolean exists(String blockID) {
 		String[] blockIDCollection = blockMap.keySet().toArray(new String[0]);
 		for (String b : blockIDCollection) {
-			if (blockName.equals(b))
+			if (blockID.equals(b))
 				return true;
 		}
 		return false;
 	}
-
-
 }
