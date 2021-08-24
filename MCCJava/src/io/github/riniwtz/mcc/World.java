@@ -13,12 +13,6 @@ public class World implements Time {
 	private boolean stopTime = false;
 	private final int MAX_TIME = 24000;
 
-	public World() {
-		boolean isNight = false;
-		gameTime += 20;
-		gameTicks += gameTime;
-	}
-
 	public GameMode gamemode;
 	public enum GameMode {
 		ADVENTURE,
@@ -26,8 +20,10 @@ public class World implements Time {
 		SPECTATOR,
 		SURVIVAL
 	}
-	public void setGameMode(GameMode gamemode) {
-		this.gamemode = gamemode;
+	public World() {
+		boolean isNight = false;
+		gameTime += 20;
+		gameTicks += gameTime;
 	}
 	public String getGameModeName() {
 		return gamemode.name();
@@ -35,22 +31,6 @@ public class World implements Time {
 	public GameMode getGameMode() {
 		return gamemode;
 	}
-
-	public void addTime(double time) {
-		this.time += time;
-	}
-	public void setTime(double time) {
-		this.time = time;
-		gameTicks = (int) time;
-	}
-	/*
-	 * 	getTime() method uses a BigDecimal class which consists of an arbitrary precision integer unscaled value and a 32-bit integer scale.
-	 * 	If zero or positive, the scale is the number of digits to the right of the decimal point. If negative, the unscaled value of the
-	 * 	number is multiplied by ten to the power of the negation of the scale. The value of the number represented by the BigDecimal
-	 * 	is therefore (unscaledValue × 10-scale).
-	 *
-	 * https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html
-	 */
 	public BigDecimal getTime() {
 		BigDecimal bigDecimal;
 		if (time >= MAX_TIME) {
@@ -65,13 +45,21 @@ public class World implements Time {
 		}
 		return BigDecimal.valueOf(time);
 	}
-
 	@Override
 	public int getGameTicks() {
 		return gameTicks;
 	}
-
 	public int getMaxTime() {
 		return MAX_TIME;
+	}
+	public void setGameMode(GameMode gamemode) {
+		this.gamemode = gamemode;
+	}
+	public void setTime(double time) {
+		this.time = time;
+		gameTicks = (int) time;
+	}
+	public void addTime(double time) {
+		this.time += time;
 	}
 }
