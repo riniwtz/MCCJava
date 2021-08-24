@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
-public class CommandOutputMessage {
+public class CommandOutputMessage extends AbstractBaseCommand {
 
 	public static void printCommandInsufficientPermissionsMessageOutput() {
 		System.out.println("Unknown command or insufficient permissions");
@@ -18,6 +18,7 @@ public class CommandOutputMessage {
 	public static void printHelpCommandMessageOutput(String command, String argument1, String argument2, String argument3) {
 		switch (command) {
 			case "give" -> System.out.println("/" + command + " " + argument1 + " " + argument2 + " " + argument3);
+			case "" -> {}
 		}
 	}
 
@@ -46,8 +47,8 @@ public class CommandOutputMessage {
 		System.out.println("Set own game mode to " + toUpperCaseFirstChar(world.getGameModeName()) + " Mode");
 	}
 
-	public static void printMessageOutput(Player player, String message) {
-		System.out.println(("<") + (player.getName()) + (">") + (" ") + (message));
+	public static void printMessageOutput(String message) {
+		System.out.println(("<") + (player.getPlayerName()) + (">") + (" ") + (message));
 	}
 
 	private static final Blocks BLOCK_MAP = new Blocks();
@@ -60,9 +61,9 @@ public class CommandOutputMessage {
 	}
 	public static void printGivePlayerItemMessageOutput(String item, int amount, Player player) {
 		if (BLOCK_MAP.getBlockMap().get(item) != null)
-			System.out.println(("Gave ") + (amount) + (" ") + ("[") + (BLOCK_MAP.getBlockMap().get(item)) + ("] to ") + (player.getName()));
+			System.out.println(("Gave ") + (amount) + (" ") + ("[") + (BLOCK_MAP.getBlockMap().get(item)) + ("] to ") + (player.getPlayerName()));
 		else
-			System.out.println(("Gave ") + (amount) + (" ") + ("[") + (ITEM_MAP.getItemMap().get(item)) + ("] to ") + (player.getName()));
+			System.out.println(("Gave ") + (amount) + (" ") + ("[") + (ITEM_MAP.getItemMap().get(item)) + ("] to ") + (player.getPlayerName()));
 	}
 	public static void printTimeMessageOutput(String timeMode, World world) {
 		switch (timeMode) {
@@ -79,9 +80,9 @@ public class CommandOutputMessage {
 		}
 	}
 	
-	public static void printKillPlayerMessageOutput(String name) {
-		System.out.println((name) + (" fell out of the world"));
-		System.out.println(("Killed ") + (name));
+	public static void printKillPlayerMessageOutput(Player player) {
+		System.out.println((player.getPlayerName()) + (" fell out of the world"));
+		System.out.println(("Killed ") + (player.getPlayerName()));
 	}
 
 	public static void printInvalidFloatMessageOutput(String cmd) {
@@ -91,8 +92,12 @@ public class CommandOutputMessage {
 	public static void printExpectedFloatMessageOutput() {
 		System.out.println("Expected float");
 	}
-	
+
 	public static void printInvalidIntegerMessageOutput(long amount) {
+		System.out.println(("Invalid integer '") + (amount) + ("'"));
+	}
+
+	public static void printInvalidIntegerMessageOutput(String amount) {
 		System.out.println(("Invalid integer '") + (amount) + ("'"));
 	}
 	
@@ -100,8 +105,8 @@ public class CommandOutputMessage {
 		System.out.println("Expected integer");
 	}
 	
-	public static void printIntegerIsZeroMessageOutput() {
-		System.out.println("Integer must not be less than 1, found 0");
+	public static void printIntegerLessMessageOutput(long amount) {
+		System.out.println("Integer must not be less than 1, found " + amount);
 	}
 	
 	public static void printUnknownItemMessageOutput(String itemName) {
@@ -128,16 +133,6 @@ public class CommandOutputMessage {
 	public static void printIncorrectArgumentCommandMessageOutput() {
 		System.out.println("Incorrect argument for command");
 	}
-
-//	private static String getConvertItemIDToItemName(String itemID) {
-//		String[] itemName = itemID.split("_");
-//		StringBuilder itemIDBuilder = new StringBuilder();
-//		for (String i : itemName) {
-//			itemIDBuilder.append(toUpperCaseFirstChar(i)).append(" ");
-//		}
-//		itemID = itemIDBuilder.toString();
-//		return itemID.substring(0, itemID.length() - 1);
-//	}
 
 	private static String toUpperCaseFirstChar(String text) {
 		return (text.substring(0, 1).toUpperCase()) + (text.substring(1).toLowerCase());

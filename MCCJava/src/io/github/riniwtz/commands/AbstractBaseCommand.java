@@ -5,36 +5,9 @@ import io.github.riniwtz.mcc.Player;
 import io.github.riniwtz.mcc.World;
 
 public abstract class AbstractBaseCommand {
-    protected String[] cmd;
-    protected Player player;
-    protected Blocks block;
-    protected Items item;
-    protected World world;
-
-    protected AbstractBaseCommand(String[] cmd) {
-        this.cmd = cmd;
-    }
-
-    protected AbstractBaseCommand(String[] cmd, World world) {
-        this.cmd = cmd;
-        this.world = world;
-    }
-
-    protected AbstractBaseCommand(String[] cmd, Player player) {
-        this.cmd = cmd;
-        this.player = player;
-    }
-
-    protected AbstractBaseCommand(String[] cmd, Player player, Blocks block) {
-        this.cmd = cmd;
-        this.player = player;
-        this.block = block;
-    }
-
-    protected AbstractBaseCommand(String[] cmd, Player player, Blocks block, Items item) {
-        this.cmd = cmd;
-        this.player = player;
-        this.block = block;
-        this.item = item;
-    }
+    public static String[] cmd;
+    public static Player player = new Player();
+    public static Blocks block = new Blocks();
+    public static Items item = new Items();
+    public static World world = new World();
 }
