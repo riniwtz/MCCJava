@@ -37,13 +37,27 @@ public class Items {
 			return "Splash Uncraftable Potion";
 		if (itemID.equals("potion"))
 			return "Uncraftable Potion";
+		if (itemID.equals("writable_book"))
+			return "Book and Quill";
 
 		String[] itemName = itemID.split("_");
 		StringBuilder itemIDBuilder = new StringBuilder();
 		for (String i : itemName) {
 			itemIDBuilder.append(toUpperCaseFirstChar(i)).append(" ");
 		}
-		return itemIDBuilder.substring(0, itemIDBuilder.length() - 1);
+
+		String formedID = "";
+		if (itemID.endsWith("_minecart")) {
+			if (itemID.startsWith("tnt"))
+				return "Minecart with TNT";
+			//return "Minecart with " + toUpperCaseFirstChar(itemID).charAt(0) + itemID.substring(1, itemID.indexOf("_"));
+			formedID = itemIDBuilder.substring(0, itemIDBuilder.length() - 1);
+			String Block = formedID.substring(0, formedID.indexOf("Minecart") - 1);
+			String Minecart = formedID.substring(formedID.indexOf("Minecart"));
+			return Minecart + " with " + Block;
+		}
+
+		return formedID;
 	}
 
 	private static String toUpperCaseFirstChar(String text) {
