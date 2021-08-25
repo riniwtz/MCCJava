@@ -8,13 +8,13 @@ public class KillCommand extends AbstractBaseCommand {
 	public void execute() {
 		if (cmd.length == 1) {
 			player.kill();
-			CommandOutputMessage.printKillPlayerMessageOutput(player);
+			CommandOutputMessage.printKillPlayerMessageOutput();
 		}
 
 		if (cmd.length == 2) {
 			if (cmd[1].equals(player.getPlayerName())) {
 				player.kill(cmd[1]);
-				CommandOutputMessage.printKillPlayerMessageOutput(player);
+				CommandOutputMessage.printKillPlayerMessageOutput();
 			}
 		}
 	}

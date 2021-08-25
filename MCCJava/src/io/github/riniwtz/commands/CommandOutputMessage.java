@@ -43,7 +43,7 @@ public class CommandOutputMessage extends AbstractBaseCommand {
 		System.out.println("Tick count must be non-negative");
 	}
 
-	public static void printSetGameModeMessageOutput(World world) {
+	public static void printSetGameModeMessageOutput() {
 		System.out.println("Set own game mode to " + toUpperCaseFirstChar(world.getGameModeName()) + " Mode");
 	}
 
@@ -59,28 +59,29 @@ public class CommandOutputMessage extends AbstractBaseCommand {
 		else if (ITEM_MAP.exists(ITEM_MAP.getItemMap().get(item)))
 			System.out.println(("Can't give more than 6400 of [") + (ITEM_MAP.getItemMap().get(item)) + ("]"));
 	}
-	public static void printGivePlayerItemMessageOutput(String item, int amount, Player player) {
+	public static void printGivePlayerItemMessageOutput(String item, int amount) {
 		if (BLOCK_MAP.getBlockMap().get(item) != null)
 			System.out.println(("Gave ") + (amount) + (" ") + ("[") + (BLOCK_MAP.getBlockMap().get(item)) + ("] to ") + (player.getPlayerName()));
 		else
 			System.out.println(("Gave ") + (amount) + (" ") + ("[") + (ITEM_MAP.getItemMap().get(item)) + ("] to ") + (player.getPlayerName()));
 	}
-	public static void printTimeMessageOutput(String timeMode, World world) {
+	public static void printTimeMessageOutput(String timeMode) {
 		switch (timeMode) {
 			case "set" -> System.out.println("Set the time to " + world.getGameTicks());
 			case "add" -> System.out.println("Set the time to " + world.getTime().intValue());
 		}
 	}
 
-	public static void printTimeQueryMessageOutput(String queryMode, World world) {
+	public static void printTimeQueryMessageOutput(String queryMode) {
 		switch (queryMode) {
 			case "day" -> System.out.println("The time is " + world.getGameTicks() / world.getMaxTime());
 			case "daytime" -> System.out.println("The time is " + world.getTime().intValue());
-			case "gametime" -> {}
+			// FIXME: gametime
+			case "gametime" -> System.out.println("The time is " + (int) world.getGameTime()); // Timer class need
 		}
 	}
 	
-	public static void printKillPlayerMessageOutput(Player player) {
+	public static void printKillPlayerMessageOutput() {
 		System.out.println((player.getPlayerName()) + (" fell out of the world"));
 		System.out.println(("Killed ") + (player.getPlayerName()));
 	}
@@ -120,7 +121,7 @@ public class CommandOutputMessage extends AbstractBaseCommand {
 		System.out.println("Unknown or incomplete command, see below for error");
 	}
 	
-	public static void printUnknownCommandDefaultMessageOutput(String[] cmd) {
+	public static void printUnknownCommandDefaultMessageOutput() {
 		StringBuilder out = new StringBuilder();
 		for (String c : cmd) out.append(c).append(" ");
 		System.out.print(out.substring(0, out.length() - 1) + ("<--[HERE]\n"));

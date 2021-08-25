@@ -17,23 +17,23 @@ public class GameModeCommand extends AbstractBaseCommand {
             switch (gamemode) {
                 case "adventure" -> {
                     world.setGameMode(World.GameMode.ADVENTURE);
-                    CommandOutputMessage.printSetGameModeMessageOutput(world);
+                    CommandOutputMessage.printSetGameModeMessageOutput();
                 }
                 case "creative" -> {
                     world.setGameMode(World.GameMode.CREATIVE);
-                    CommandOutputMessage.printSetGameModeMessageOutput(world);
+                    CommandOutputMessage.printSetGameModeMessageOutput();
                 }
                 case "spectator" -> {
                     world.setGameMode(World.GameMode.SPECTATOR);
-                    CommandOutputMessage.printSetGameModeMessageOutput(world);
+                    CommandOutputMessage.printSetGameModeMessageOutput();
                 }
                 case "survival" -> {
                     world.setGameMode(World.GameMode.SURVIVAL);
-                    CommandOutputMessage.printSetGameModeMessageOutput(world);
+                    CommandOutputMessage.printSetGameModeMessageOutput();
                 }
                 default -> {
                     CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-                    CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+                    CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
                 }
             }
     	}
@@ -48,12 +48,12 @@ public class GameModeCommand extends AbstractBaseCommand {
         }
         if (cmd.length > MAXIMUM_ARGUMENT) {
             CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-            CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+            CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
             return true;
         }
         if (cmd.length < MINIMUM_ARGUMENT) {
             CommandOutputMessage.printUnknownCommandMessageOutput();
-            CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+            CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
             return true;
         }
         if (!(world.getGameMode() == null)) {

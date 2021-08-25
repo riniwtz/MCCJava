@@ -6,8 +6,10 @@ public class TimeCommand extends AbstractBaseCommand {
 	private String queryMode;
 	private double time;
 	private boolean isTimeCharacter;
+	private int gametime = 0;
 
     public TimeCommand() {
+    	gametime += 20;
         execute();
     }
 
@@ -22,7 +24,7 @@ public class TimeCommand extends AbstractBaseCommand {
 							world.addTime(Integer.MAX_VALUE);
 						else
 							world.addTime(time);
-						CommandOutputMessage.printTimeMessageOutput(timeMode, world);
+						CommandOutputMessage.printTimeMessageOutput(timeMode);
 					}
 
 					/*
@@ -31,14 +33,14 @@ public class TimeCommand extends AbstractBaseCommand {
 						gametime = Returns the age of the Minecraft world in game ticks
 					 */
 
-					case "query" -> CommandOutputMessage.printTimeQueryMessageOutput(queryMode, world);
+					case "query" -> CommandOutputMessage.printTimeQueryMessageOutput(queryMode);
 					case "set" -> {
 						if (time > Integer.MAX_VALUE)
 							world.setTime(Integer.MAX_VALUE);
 						else
 							world.setTime(time);
 
-						CommandOutputMessage.printTimeMessageOutput(timeMode, world);
+						CommandOutputMessage.printTimeMessageOutput(timeMode);
 					}
 					case "get" -> System.out.println(world.getTime().intValue());
 				}
@@ -50,13 +52,13 @@ public class TimeCommand extends AbstractBaseCommand {
 	protected boolean hasCommandHandlerError(String[] cmd) {
 		if (cmd.length == (RANGE - 2)) {
 			CommandOutputMessage.printUnknownCommandMessageOutput();
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 			return true;
 		}
 
 		if (cmd.length > RANGE) {
 			CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 			return true;
 		}
 
@@ -67,7 +69,7 @@ public class TimeCommand extends AbstractBaseCommand {
 					case "add", "query", "set" -> CommandOutputMessage.printUnknownCommandMessageOutput();
 					default -> CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
 				}
-				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+				CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 				return true;
 			}
 		}
@@ -94,7 +96,7 @@ public class TimeCommand extends AbstractBaseCommand {
 				if (cmd[2].charAt(0) == numberList.charAt(i)) {
 					if (cmd[2].substring(1).contains(",")) {
 						CommandOutputMessage.printExpectedWhitespaceMessageOutput();
-						CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+						CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 						return false;
 					}
 				}
@@ -105,7 +107,7 @@ public class TimeCommand extends AbstractBaseCommand {
 			else
 				CommandOutputMessage.printExpectedFloatMessageOutput();
 
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 			return false;
 		}
 

@@ -9,9 +9,7 @@ public class GiveCommand extends AbstractBaseCommand {
 	private boolean isAmountCharacter;
 	private final int MINIMUM_ARGUMENT = 3;
 
-	public GiveCommand(Player player) {
-		AbstractBaseCommand.player = player;
-		player.write(player.getPlayerName());
+	public GiveCommand() {
 		execute();
 	}
 
@@ -26,7 +24,7 @@ public class GiveCommand extends AbstractBaseCommand {
 		if (!(hasCommandHandlerError())) {
 			if (isAmountValid()) {
 				player.addItemInventory(itemID, (int)amount);
-				CommandOutputMessage.printGivePlayerItemMessageOutput(itemID, (int)amount, player);
+				CommandOutputMessage.printGivePlayerItemMessageOutput(itemID, (int)amount);
 			}
 			this.amount = 1;
 		}
@@ -54,7 +52,7 @@ public class GiveCommand extends AbstractBaseCommand {
 	protected boolean hasCommandHandlerError() {
 		if (cmd.length < MINIMUM_ARGUMENT) {
 			CommandOutputMessage.printUnknownCommandMessageOutput();
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 			return true;
 		}
 		// Checks error if player matches and command length is greater than the maximum argument
@@ -62,14 +60,14 @@ public class GiveCommand extends AbstractBaseCommand {
 		if (playerName.equals(player.getPlayerName())) {
 			if (cmd.length > MAXIMUM_ARGUMENT) {
 				CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+				CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 				return true;
 			}
 		}
 		// Checks error if block and item doesn't exist
 		if ((!(block.exists(itemID)) && (!(item.exists(itemID))))) {
 			CommandOutputMessage.printUnknownItemMessageOutput(itemID);
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 			return true;
 		}
 		// Checks error if (player doesn't match) yet (block or item exists) and checks if (command length is not greater than maximum argument is false)
@@ -83,7 +81,7 @@ public class GiveCommand extends AbstractBaseCommand {
 				if (cmd.length > MAXIMUM_ARGUMENT) {
 					if (isAmountValid()) {
 						CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-						CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+						CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 					}
 				}
 			}
@@ -96,7 +94,7 @@ public class GiveCommand extends AbstractBaseCommand {
 		if (amount > Integer.MAX_VALUE) {
 			amount = Integer.MAX_VALUE;
 			CommandOutputMessage.printInvalidIntegerMessageOutput(amount);
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 			return false;
 		}
 		if (amount < Integer.MIN_VALUE) {
@@ -111,19 +109,16 @@ public class GiveCommand extends AbstractBaseCommand {
 		}
 		if ((amount == 0) || (amount < 0)) {
 			CommandOutputMessage.printIntegerLessMessageOutput(amount);
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 			return false;
 		}
 		if (isAmountCharacter) {
-			if (!isAmountString(amountString)) {
+			if (!isAmountString(amountString))
 				CommandOutputMessage.printExpectedIntegerMessageOutput();
-				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-				return false;
-			} else {
+			else
 				CommandOutputMessage.printInvalidIntegerMessageOutput(amountString);
-				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-				return false;
-			}
+			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
+			return false;
 		}
 		return true;
 	}
