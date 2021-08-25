@@ -8,12 +8,11 @@ public class World implements Time {
 	private String worldName = "My World";
 	private int gameTime = 0;
 	private int gameTicks;
-
 	private double time;
-	private boolean stopTime = false;
 	private final int MAX_TIME = 24000;
-
+	private boolean stopTime = false;
 	public GameMode gamemode;
+
 	public enum GameMode {
 		ADVENTURE,
 		CREATIVE,
@@ -37,11 +36,9 @@ public class World implements Time {
 			bigDecimal = BigDecimal.valueOf(time)
 					.divide(BigDecimal.valueOf(MAX_TIME), MathContext.DECIMAL64);
 
-			return (
-					bigDecimal.subtract(BigDecimal.valueOf(bigDecimal.intValue())))
+			return (bigDecimal.subtract(BigDecimal.valueOf(bigDecimal.intValue())))
 					.multiply(BigDecimal.valueOf(MAX_TIME))
-					.setScale(1, RoundingMode.HALF_UP
-					);
+					.setScale(1, RoundingMode.HALF_UP);
 		}
 		return BigDecimal.valueOf(time);
 	}
@@ -51,6 +48,9 @@ public class World implements Time {
 	}
 	public int getMaxTime() {
 		return MAX_TIME;
+	}
+	public double getGameTime() {
+		return gameTime;
 	}
 	public void setGameMode(GameMode gamemode) {
 		this.gamemode = gamemode;
