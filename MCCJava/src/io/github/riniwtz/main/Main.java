@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import io.github.riniwtz.commands.*;
 import io.github.riniwtz.mcc.Player;
+import io.github.riniwtz.mcc.World;
 
 public class Main implements Runnable {
 	public static final String NAME_ID = "MCCJava";
@@ -11,40 +12,17 @@ public class Main implements Runnable {
 	public static final String VERSION = "Version 1.0";
 	private static final Scanner sc = new Scanner(System.in);
 	private static String[] cmd;
-	private static Player player = new Player();
 
 	public static void main(String[] args) {
 		Thread thread = new Thread(new Main());
 		thread.start();
 	}
 
-	public static void printProgramInfo() {
-		System.out.println(
-				"Minecraft Commands Java [" + NAME_ID + ": " + VERSION + "]\n"
-						+ "(c) " + AUTHOR + ". All rights reserved.\n"
-						+ "Contact: riniwtzcode@gmail.com\n"
-		);
-	}
-
-	private static void initializeName() {
-		boolean hasName = false;
-		do {
-			System.out.print("Enter your name: ");
-			String name = sc.nextLine();
-			if (name != null) {
-				if (!(name.charAt(0) == '-') && (name.length() >= 3) && (name.length() <= 16)) {
-					player.setPlayerName(name);
-					hasName = true;
-				}
-				else System.out.println("The length of nickname should be at least 3 and no more than 16 characters, and should not start with the '-' symbol!");
-			}
-		} while (!hasName);
-	}
-
 	@Override
 	public void run() {
 		printProgramInfo();
 		initializeName();
+		initializeWorld();
 		System.out.println("Type a message or a command");
 		while (true) {
 			System.out.print("> ");
@@ -71,9 +49,43 @@ public class Main implements Runnable {
 		sc.close();
 	}
 
+	public static void printProgramInfo() {
+		System.out.println(
+				"Minecraft Commands Java [" + NAME_ID + ": " + VERSION + "]\n"
+						+ "(c) " + AUTHOR + ". All rights reserved.\n"
+						+ "Contact: riniwtzcode@gmail.com\n"
+		);
+	}
+
+	private static void initializeName() {
+		Player player = new Player();
+		AbstractBaseCommand.player = player;
+		boolean hasName = false;
+		do {
+			System.out.print("Enter your name: ");
+			String name = sc.nextLine();
+			if (name != null) {
+				if (!(name.charAt(0) == '-') && (name.length() >= 3) && (name.length() <= 16)) {
+					player.setPlayerName(name);
+					player.write(name);
+					hasName = true;
+				}
+				else System.out.println("The length of nickname should be at least 3 and no more than 16 characters, and should not start with the '-' symbol!");
+			}
+		} while (!hasName);
+	}
+
+	private void initializeWorld() {
+		new World();
+	}
+
+	private static void setCommand(String[] cmd) {
+		AbstractBaseCommand.cmd = cmd;
+	}
+
 	private static void runCommand() {
 		switch (cmd[0]) {
-			case "/give" -> new GiveCommand(player);
+			case "/give" -> new GiveCommand();
 			case "/time" -> new TimeCommand();
 			case "/kill" -> new KillCommand();
 			case "/gamemode" -> new GameModeCommand();
@@ -81,12 +93,8 @@ public class Main implements Runnable {
 			case "/quit" -> System.exit(0);
 			default -> {
 				CommandOutputMessage.printUnknownCommandMessageOutput();
-				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+				CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
 			}
 		}
-	}
-
-	private static void setCommand(String[] cmd) {
-		AbstractBaseCommand.cmd = cmd;
 	}
 }
