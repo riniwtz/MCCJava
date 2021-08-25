@@ -114,12 +114,18 @@ public class GiveCommand extends AbstractBaseCommand {
 			CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
 			return false;
 		}
-		if (isAmountCharacter && !isAmountString(amountString))
-			CommandOutputMessage.printExpectedIntegerMessageOutput();
-		else
-			CommandOutputMessage.printInvalidIntegerMessageOutput(amountString);
-		CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
-		return false;
+		if (isAmountCharacter) {
+			if (!isAmountString(amountString)) {
+				CommandOutputMessage.printExpectedIntegerMessageOutput();
+				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+				return false;
+			} else {
+				CommandOutputMessage.printInvalidIntegerMessageOutput(amountString);
+				CommandOutputMessage.printUnknownCommandDefaultMessageOutput(cmd);
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public boolean isAmountString(String amount) {
