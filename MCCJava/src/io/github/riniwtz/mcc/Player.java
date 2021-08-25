@@ -8,8 +8,8 @@ public class Player extends Inventory {
 
 	public void write(String text) {
 		try {
-			BufferedWriter playerWriter = new BufferedWriter(new FileWriter("players.txt"));
-			playerWriter.write(text);
+			BufferedWriter playerWriter = new BufferedWriter(new FileWriter("players.txt", true));
+			playerWriter.write(text + "\n");
 			playerWriter.close();
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
