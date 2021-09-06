@@ -85,7 +85,7 @@ public class GiveCommand extends AbstractBaseCommand {
 					return true;
 				}
 			} else {
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < amountStringPlaceholder.length(); i++) {
 					if (Character.toString(amountStringPlaceholder.charAt(i)).equals(".") || Character.toString(amountStringPlaceholder.charAt(i)).equals("-")) {
 						hasDotOrDash = true;
 						break;
