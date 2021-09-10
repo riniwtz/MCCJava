@@ -42,11 +42,12 @@ public class Items {
 
 		String[] itemName = itemID.split("_");
 		StringBuilder itemIDBuilder = new StringBuilder();
+
 		for (String i : itemName) {
 			itemIDBuilder.append(toUpperCaseFirstChar(i)).append(" ");
 		}
 
-		String formedID = "";
+		String formedID;
 		if (itemID.endsWith("_minecart")) {
 			if (itemID.startsWith("tnt"))
 				return "Minecart with TNT";
@@ -57,7 +58,7 @@ public class Items {
 			return Minecart + " with " + Block;
 		}
 
-		return formedID;
+		return itemIDBuilder.substring(0, itemIDBuilder.toString().length() - 1);
 	}
 
 	private static String toUpperCaseFirstChar(String text) {
