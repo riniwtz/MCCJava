@@ -1,129 +1,132 @@
 package io.github.riniwtz.commands;
 
-import io.github.riniwtz.mcc.Player;
+import java.math.BigInteger;
+import java.util.regex.Pattern;
 
 public class GiveCommand extends AbstractBaseCommand {
-	private String itemID;
-	private String playerName;
-	private long amount = 1;
-	private boolean isAmountCharacter;
+	// Global Private Fields
+	private String itemBlockArgument;
+	private String amountStringPlaceholder = "1";
+	private BigInteger amountArgument = BigInteger.valueOf(1L);
 	private final int MINIMUM_ARGUMENT = 3;
+	private final int MAXIMUM_ARGUMENT = 4;
+	private boolean hasAmountArgumentException;
+	private boolean isAmountArgumentIntegerFlow;
+	private boolean isNameArgumentValid, isItemBlockArgumentValid;
 
+	// Initialization
 	public GiveCommand() {
-		execute();
-	}
+		String nameArgument;
+		AbstractBaseCommand.MINIMUM_ARGUMENT = MINIMUM_ARGUMENT;
+		AbstractBaseCommand.MAXIMUM_ARGUMENT = MAXIMUM_ARGUMENT;
 
-	public void execute() {
-		if (cmd.length > 2) playerName = cmd[1];
+		if (cmd.length > 2) {
+			nameArgument = cmd[1];
+			isNameArgumentValid = player.exists(nameArgument);
+		}
 		if (cmd.length >= MINIMUM_ARGUMENT) {
-			if (isPrefixValid())
-				cmd[2] = getSplitString(cmd[2], ":");
-			itemID = cmd[2];
+			if ((cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:")))
+				cmd[2] = getLastSplitString(cmd[2]);
+
+			isItemBlockArgumentValid = block.exists(cmd[2]) || item.exists(cmd[2]);
+			itemBlockArgument = cmd[2];
 		}
-		if (cmd.length == 4) amount = getAmountToLongConverted(cmd[3]);
-		if (!(hasCommandHandlerError())) {
-			if (isAmountValid()) {
-				player.addItemInventory(itemID, (int)amount);
-				CommandOutputMessage.printGivePlayerItemMessageOutput(itemID, (int)amount);
+		if (cmd.length >= MAXIMUM_ARGUMENT) {
+			amountStringPlaceholder = cmd[3];
+			try {
+				amountArgument = new BigInteger(amountStringPlaceholder);
+			} catch (NumberFormatException e) {
+				hasAmountArgumentException = true;
 			}
-			this.amount = 1;
+			if (!hasAmountArgumentException)
+				isAmountArgumentIntegerFlow = amountArgument.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
+						|| amountArgument.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0;
 		}
-		isAmountCharacter = false;
 	}
 
-	public boolean isPrefixValid() {
-		return (cmd[2].length() > 10) && (cmd[2].startsWith("minecraft:"));
-	}
+	// Command Error Handler
+	private boolean argumentErrorHandler() {
+		// Local Field
+		final int AMOUNT_ARGUMENT_LIMIT = 6400;
 
-	public String getSplitString(String text, String letter) {
-		return text.substring(text.indexOf(letter) + 1);
-	}
-	String amountString;
-	public long getAmountToLongConverted(String amount) {
-		try {
-			this.amount = Long.parseLong(amount);
-		} catch (NumberFormatException e) {
-			this.isAmountCharacter = true;
-		}
-		amountString = amount;
-		return this.amount;
-	}
-
-	protected boolean hasCommandHandlerError() {
 		if (cmd.length < MINIMUM_ARGUMENT) {
-			CommandOutputMessage.printUnknownCommandMessageOutput();
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
+			CommandOutputMessage.printUnknownCommandMessage();
+			CommandOutputMessage.printUnknownCommandDefaultMessage();
 			return true;
 		}
-		// Checks error if player matches and command length is greater than the maximum argument
-		final int MAXIMUM_ARGUMENT = 4;
-		if (playerName.equals(player.getPlayerName())) {
+		// Checks if [name=any, item=valid, amount=any]
+		if (isItemBlockArgumentValid) {
 			if (cmd.length > MAXIMUM_ARGUMENT) {
-				CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-				CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
+				CommandOutputMessage.printIncorrectArgumentMessage();
+				CommandOutputMessage.printUnknownCommandDefaultMessage();
 				return true;
 			}
-		}
-		// Checks error if block and item doesn't exist
-		if ((!(block.exists(itemID)) && (!(item.exists(itemID))))) {
-			CommandOutputMessage.printUnknownItemMessageOutput(itemID);
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
-			return true;
-		}
-		// Checks error if (player doesn't match) yet (block or item exists) and checks if (command length is not greater than maximum argument is false)
-		// Checks error if (player doesn't match) yet (block or item exists) and checks if (command length is not greater than maximum argument is true)
-		if (!(playerName.equals(player.getPlayerName()))) {
-			if (block.exists(itemID) || item.exists(itemID)) {
-				if (!(cmd.length > MAXIMUM_ARGUMENT)) {
-					if (isAmountValid())
-						CommandOutputMessage.printNoPlayerFoundMessageOutput();
+			// Checks if [name=any, item=valid, amount=valid]
+			if (!hasAmountArgumentException) {
+				if (!isAmountArgumentIntegerFlow) {
+					// Checks if [name=any, item=valid, amount <= 0]
+					if (amountArgument.compareTo(BigInteger.ZERO) <= 0) {
+						CommandOutputMessage.printIntegerLessMessage(1, amountArgument);
+						CommandOutputMessage.printUnknownCommandDefaultMessage();
+						return true;
+					}
+					// Checks if [name=valid, item=valid, amount > 0]
+					if (isNameArgumentValid) {
+						if (amountArgument.compareTo(BigInteger.valueOf(AMOUNT_ARGUMENT_LIMIT)) > 0) {
+							CommandOutputMessage.printItemBlockAmountLimitMessage(itemBlockArgument);
+							return true;
+						}
+					} else {
+						CommandOutputMessage.printNoPlayerFoundMessage();
+						return true;
+					}
+				} else {
+					CommandOutputMessage.printInvalidIntegerMessage(amountArgument);
+					CommandOutputMessage.printUnknownCommandDefaultMessage();
+					return true;
 				}
-				if (cmd.length > MAXIMUM_ARGUMENT) {
-					if (isAmountValid()) {
-						CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-						CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
+			} else {
+				// Checks if [name=any, item=valid, amount=error]
+				for (int i = 0; i < amountStringPlaceholder.length(); i++) {
+					String stringPlaceholder = Character.toString(amountStringPlaceholder.charAt(i));
+					if (stringPlaceholder.equals(".") || stringPlaceholder.equals("-")) {
+						CommandOutputMessage.printInvalidIntegerMessage(amountStringPlaceholder);
+						break;
+					} else if (!isStringHasNumber(amountStringPlaceholder, i)) {
+						if (Character.toString(amountStringPlaceholder.charAt(0)).equals("0"))
+							CommandOutputMessage.printIntegerLessMessage(1, 0);
+						else if (isStringHasNumber(Character.toString(amountStringPlaceholder.charAt(0)), 0))
+							CommandOutputMessage.printExpectedWhitespaceMessage();
+						else
+							CommandOutputMessage.printExpectedIntegerMessage();
+						break;
 					}
 				}
+				CommandOutputMessage.printUnknownCommandDefaultMessage();
+				return true;
 			}
+		} else {
+			// Checks if [name=any, item=error, amount=any]
+			CommandOutputMessage.printUnknownItemMessage(itemBlockArgument);
+			CommandOutputMessage.printUnknownCommandDefaultMessage();
 			return true;
 		}
 		return false;
 	}
 
-	public boolean isAmountValid() {
-		if (amount > Integer.MAX_VALUE) {
-			amount = Integer.MAX_VALUE;
-			CommandOutputMessage.printInvalidIntegerMessageOutput(amount);
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
-			return false;
+	// Execution
+	public void execute() {
+		if (!argumentErrorHandler()) {
+			player.addItemInventory(itemBlockArgument, amountArgument.intValue());
+			CommandOutputMessage.printGiveCommandSuccessMessage(itemBlockArgument, amountArgument.intValue());
 		}
-		if (amount < Integer.MIN_VALUE) {
-			amount = Integer.MIN_VALUE;
-		}
-		final int AMOUNT_LIMIT = 6400;
-		if (playerName.equals(player.getPlayerName())) {
-			if ((amount > AMOUNT_LIMIT) && (amount < Integer.MAX_VALUE)) {
-				CommandOutputMessage.printGivePlayerAmountLimitMessageOutput(itemID);
-				return false;
-			}
-		}
-		if ((amount == 0) || (amount < 0)) {
-			CommandOutputMessage.printIntegerLessMessageOutput(amount);
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
-			return false;
-		}
-		if (isAmountCharacter) {
-			if (!isAmountString(amountString))
-				CommandOutputMessage.printExpectedIntegerMessageOutput();
-			else
-				CommandOutputMessage.printInvalidIntegerMessageOutput(amountString);
-			CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
-			return false;
-		}
-		return true;
 	}
 
-	public boolean isAmountString(String amount) {
-		return amount.length() > String.valueOf(Long.MAX_VALUE).length();
+	// Tools
+	private boolean isStringHasNumber(String numberString, int index) {
+		return Pattern.compile("[\\d]").matcher(Character.toString(numberString.charAt(index))).matches();
+	}
+	private String getLastSplitString(String text) {
+		return text.substring(text.indexOf(":") + 1);
 	}
 }
