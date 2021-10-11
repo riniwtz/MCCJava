@@ -2,63 +2,71 @@ package io.github.riniwtz.commands;
 import io.github.riniwtz.mcc.World;
 
 public class GameModeCommand extends AbstractBaseCommand {
+    // Global Private Fields
     private static final int MINIMUM_ARGUMENT = 2;
     private static final int MAXIMUM_ARGUMENT = 3;
-    private String gamemode;
-    private String playerName;
+    private String gameModeArgument;
+    private String playerArgument;
 
+    // Initialization
     public GameModeCommand() {
-        execute();
-    }
-    public void execute() {
-        if (cmd.length > 1) gamemode = cmd[1];
-        if (cmd.length > MINIMUM_ARGUMENT) playerName = cmd[2];
-    	if (!(hasCommandHandlerError(cmd))) {
-            switch (gamemode) {
-                case "adventure" -> {
-                    world.setGameMode(World.GameMode.ADVENTURE);
-                    CommandOutputMessage.printSetGameModeMessageOutput();
-                }
-                case "creative" -> {
-                    world.setGameMode(World.GameMode.CREATIVE);
-                    CommandOutputMessage.printSetGameModeMessageOutput();
-                }
-                case "spectator" -> {
-                    world.setGameMode(World.GameMode.SPECTATOR);
-                    CommandOutputMessage.printSetGameModeMessageOutput();
-                }
-                case "survival" -> {
-                    world.setGameMode(World.GameMode.SURVIVAL);
-                    CommandOutputMessage.printSetGameModeMessageOutput();
-                }
-                default -> {
-                    CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-                    CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
-                }
-            }
-    	}
+        AbstractBaseCommand.MINIMUM_ARGUMENT = MINIMUM_ARGUMENT;
+        AbstractBaseCommand.MAXIMUM_ARGUMENT = MAXIMUM_ARGUMENT;
+
+        if (cmd.length > 1) gameModeArgument = cmd[1];
+        if (cmd.length > MINIMUM_ARGUMENT) playerArgument = cmd[2];
     }
 
-    protected boolean hasCommandHandlerError(String[] cmd) {
+    // Command Error Handler
+    private boolean argumentErrorHandler() {
+        // Only limits to valid argument length and checks if player doesn't match
         if ((cmd.length > MINIMUM_ARGUMENT) && (cmd.length <= MAXIMUM_ARGUMENT)) {
-            if (!(playerName.equals(player.getPlayerName()))) {
-                CommandOutputMessage.printNoPlayerFoundMessageOutput();
+            if (!playerArgument.equals(player.getPlayerName())) {
+                CommandOutputMessage.printNoPlayerFoundMessage();
                 return true;
             }
         }
         if (cmd.length > MAXIMUM_ARGUMENT) {
-            CommandOutputMessage.printIncorrectArgumentCommandMessageOutput();
-            CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
+            CommandOutputMessage.printIncorrectArgumentMessage();
+            CommandOutputMessage.printUnknownCommandDefaultMessage();
             return true;
         }
         if (cmd.length < MINIMUM_ARGUMENT) {
-            CommandOutputMessage.printUnknownCommandMessageOutput();
-            CommandOutputMessage.printUnknownCommandDefaultMessageOutput();
+            CommandOutputMessage.printUnknownCommandMessage();
+            CommandOutputMessage.printUnknownCommandDefaultMessage();
             return true;
         }
         if (!(world.getGameMode() == null)) {
-            return gamemode.equals(world.getGameModeName().toLowerCase());
+            return gameModeArgument.equals(world.getGameModeName().toLowerCase());
         }
         return false;
+    }
+
+    // Execution
+    public void execute() {
+        if (!argumentErrorHandler()) {
+            switch (gameModeArgument) {
+                case "adventure" -> {
+                    world.setGameMode(World.GameMode.ADVENTURE);
+                    CommandOutputMessage.printGameModeCommandSuccessMessage();
+                }
+                case "creative" -> {
+                    world.setGameMode(World.GameMode.CREATIVE);
+                    CommandOutputMessage.printGameModeCommandSuccessMessage();
+                }
+                case "spectator" -> {
+                    world.setGameMode(World.GameMode.SPECTATOR);
+                    CommandOutputMessage.printGameModeCommandSuccessMessage();
+                }
+                case "survival" -> {
+                    world.setGameMode(World.GameMode.SURVIVAL);
+                    CommandOutputMessage.printGameModeCommandSuccessMessage();
+                }
+                default -> {
+                    CommandOutputMessage.printIncorrectArgumentMessage();
+                    CommandOutputMessage.printUnknownCommandDefaultMessage();
+                }
+            }
+    	}
     }
 }
