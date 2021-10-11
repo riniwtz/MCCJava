@@ -1,5 +1,4 @@
 package io.github.riniwtz.commands;
-
 import java.math.BigInteger;
 import java.util.regex.Pattern;
 
@@ -66,7 +65,7 @@ public class GiveCommand extends AbstractBaseCommand {
 				if (!isAmountArgumentIntegerFlow) {
 					// Checks if [name=any, item=valid, amount <= 0]
 					if (amountArgument.compareTo(BigInteger.ZERO) <= 0) {
-						CommandOutputMessage.printIntegerLessMessage(1, amountArgument);
+						CommandOutputMessage.printIntegerLessMessage(amountArgument);
 						CommandOutputMessage.printUnknownCommandDefaultMessage();
 						return true;
 					}
@@ -87,8 +86,9 @@ public class GiveCommand extends AbstractBaseCommand {
 				}
 			} else {
 				// Checks if [name=any, item=valid, amount=error]
+				String stringPlaceholder;
 				for (int i = 0; i < amountStringPlaceholder.length(); i++) {
-					String stringPlaceholder = Character.toString(amountStringPlaceholder.charAt(i));
+					stringPlaceholder = Character.toString(amountStringPlaceholder.charAt(i));
 					if (stringPlaceholder.equals(".") || stringPlaceholder.equals("-")) {
 						CommandOutputMessage.printInvalidIntegerMessage(amountStringPlaceholder);
 						break;
